@@ -1,9 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-import '../Data&Methods/AllUsers.dart';
-import '../UI/ThemeColors.dart';
-import 'AllProfilePage.dart';
+import '../../UI/ThemeColors.dart';
+import '../../Data&Methods/Users.dart';
+import '../Profile/AllProfilePage.dart';
 
 class OtherProfilesSection extends StatelessWidget {
   const OtherProfilesSection({super.key});
@@ -28,8 +28,8 @@ class OtherProfilesSection extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(17),
-                child: Image.asset(
-                  AllUsers.allUsers[1]['profilePhoto'].toString(),
+                child: Image.network(
+                  Users.otherProfiles[1 % Users.otherProfiles.length]['profilepicture'].toString(),
                   fit: BoxFit.cover,
                   width: double.infinity,
                   height: double.infinity,
@@ -39,7 +39,7 @@ class OtherProfilesSection extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const AllProfilePage(),));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const AllProfilePage(userID: ""),));
             },
             child: Container(
               height: 300,
@@ -55,8 +55,8 @@ class OtherProfilesSection extends StatelessWidget {
                 borderRadius: BorderRadius.circular(17),
                 child: Stack(
                   children: [
-                    Image.asset(
-                      AllUsers.allUsers[0]['profilePhoto'].toString(),
+                    Image.network(
+                      Users.otherProfiles[0]['profilepicture'].toString(),
                       fit: BoxFit.cover,
                       width: double.infinity,
                       height: double.infinity,
@@ -84,7 +84,7 @@ class OtherProfilesSection extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            AllUsers.allUsers[0]['name'].toString(),
+                            Users.otherProfiles[0]['username'].toString(),
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                               color: Colors.white,
@@ -93,7 +93,7 @@ class OtherProfilesSection extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            AllUsers.allUsers[0]['bio'].toString(),
+                            Users.otherProfiles[0]['bio'].toString(),
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                               color: Colors.white,

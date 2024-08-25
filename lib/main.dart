@@ -1,9 +1,14 @@
 import "package:flutter/material.dart";
-import 'package:true_link/UI/ThemeColors.dart';
 
-import 'Activities/HomePage.dart';
+import 'Activities/HomePage/HomePage.dart';
+import 'Data&Methods/Users.dart';
 
-void main() {
+Future<void> main() async {
+  if(await Users.getAllUserData() == true) {
+    print("Success");
+  } else {
+    print("Unable to load All Users");
+  }
   runApp(const TrueLink());
 }
 
