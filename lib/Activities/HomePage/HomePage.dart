@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:true_link/Activities/HomePage/MatchedUserSection.dart';
+import 'package:true_link/Activities/PostPage.dart';
+import 'package:true_link/Activities/Profile/AllProfilePage.dart';
 import 'package:true_link/UI/Background.dart';
 import 'package:true_link/UI/ThemeColors.dart';
 
@@ -136,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const TagsPage(),));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => PostPage(isAll: false),));
                           },
                           child: Container(
                             margin: const EdgeInsets.only(
@@ -162,13 +164,27 @@ class _HomePageState extends State<HomePage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Tags',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w300,
-                                  ),
+                                Row(
+                                  children: [
+                                    const Text(
+                                      'Tags',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    ),
+                                    if (Users.tagPosts.isNotEmpty)
+                                      Container(
+                                        margin: const EdgeInsets.only(left: 5, bottom: 12),
+                                        height: 4,
+                                        width: 4,
+                                        decoration: const BoxDecoration(
+                                          color: Colors.red,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                  ],
                                 ),
                                 Icon(
                                   Icons.arrow_forward_outlined,
@@ -180,7 +196,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const TagsPage(),));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const AllProfilePage(userID: "Match Requests"),));
                           },
                           child: Container(
                             margin: const EdgeInsets.only(
@@ -206,13 +222,27 @@ class _HomePageState extends State<HomePage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Matched Requests',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w300,
-                                  ),
+                                Row(
+                                  children: [
+                                    const Text(
+                                      'Match Requests',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    ),
+                                    if (Users.matchRequests.isNotEmpty)
+                                      Container(
+                                        margin: const EdgeInsets.only(left: 5, bottom: 12),
+                                        height: 4,
+                                        width: 4,
+                                        decoration: const BoxDecoration(
+                                          color: Colors.red,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                  ],
                                 ),
                                 Icon(
                                   Icons.arrow_forward_outlined,
@@ -224,7 +254,12 @@ class _HomePageState extends State<HomePage> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const TagsPage(),));
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const AllProfilePage(userID: "Pending Requests"),
+                              ),
+                            );
                           },
                           child: Container(
                             margin: const EdgeInsets.only(
@@ -239,24 +274,38 @@ class _HomePageState extends State<HomePage> {
                             height: 36,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                                color: ThemeColors.gradientColor2,
-                                border: Border(
-                                    bottom: BorderSide(
-                                      color: ThemeColors.themeColor,
-                                      width: 0.5,
-                                    )
-                                )
+                              color: ThemeColors.gradientColor2,
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: ThemeColors.themeColor,
+                                  width: 0.5,
+                                ),
+                              ),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'Pending Requests',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w300,
-                                  ),
+                                Row(
+                                  children: [
+                                    const Text(
+                                      'Pending Requests',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    ),
+                                    if (Users.pendingRequests.isNotEmpty)
+                                      Container(
+                                        margin: const EdgeInsets.only(left: 5, bottom: 12),
+                                        height: 4,
+                                        width: 4,
+                                        decoration: const BoxDecoration(
+                                          color: Colors.red,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                  ],
                                 ),
                                 Icon(
                                   Icons.arrow_forward_outlined,

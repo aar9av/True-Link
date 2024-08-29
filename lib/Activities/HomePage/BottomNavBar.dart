@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:true_link/Activities/Profile/EditProfile.dart';
+import 'package:true_link/main.dart';
 import '../../UI/ThemeColors.dart';
 import '../../Data&Methods/Users.dart';
+import '../PostPage.dart';
+import '../Profile/AllProfilePage.dart';
+import 'HomePage.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -34,7 +38,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             children: [
               IconButton(
                 onPressed: () {
-
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => PostPage(isAll: true),));
                 },
                 icon: const Icon(
                   Icons.short_text_outlined,
@@ -44,7 +48,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
               ),
               SizedBox(width: MediaQuery.of(context).size.width / 3),
               IconButton(
-                onPressed: () {},
+                onPressed: () async {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AllProfilePage(userID: "User History"),));
+                },
                 icon: const Icon(
                   Icons.history_outlined,
                   color: Colors.grey,

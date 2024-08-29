@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:true_link/UI/Background.dart';
 import 'package:true_link/UI/ThemeColors.dart';
 import '../../Data&Methods/Users.dart';
 
@@ -16,22 +16,55 @@ class _AllProfilePageState extends State<AllProfilePage> {
   bool isBioExpanded = false;
   int profileIndex = 0;
   bool isFirstTime = false;
-  dynamic displayUser;
+  List<dynamic> displayUsers = [];
+  bool reqButton = true;
+  String matchBtnText = "Request Match +";
 
   @override
   Widget build(BuildContext context) {
-    if(widget.userID.isEmpty) {
-      displayUser = Users.otherProfiles[profileIndex];
+    if(widget.userID == "All Profiles") {
+      displayUsers = Users.otherProfiles;
+    } else if(widget.userID == "Match Requests") {
+      displayUsers = Users.matchRequests;
+      matchBtnText = "Accept Request +";
+    } else if(widget.userID == "Pending Requests") {
+      displayUsers = Users.pendingRequests;
+      matchBtnText = "Cancel Request";
+    } else if(widget.userID == "User History") {
+      displayUsers = Users.userHistory;
+      matchBtnText = "Reconnect +";
     } else {
       for(int i=0; i<Users.allUserData.length; ++i) {
+        displayUsers = [];
         if(Users.allUserData[i]['userID'] == widget.userID) {
-          displayUser = Users.allUserData[i];
+          displayUsers.add(Users.allUserData[i]);
           break;
         }
       }
     }
+    if(displayUsers.isNotEmpty) {
+      if (displayUsers[profileIndex]['gender'] == Users.currentUserData['gender'] ||
+          displayUsers[profileIndex]['userID'] == Users.matchedUserData['userID']) {
+        reqButton = false;
+      }
+    }
     return Scaffold(
-      body: Center(
+      body: displayUsers.isEmpty ?
+      Stack(
+        children: [
+          const Background(),
+          Center(
+            child: Text(
+              'NULL',
+              style: TextStyle(
+                color: ThemeColors.themeColor,
+                fontSize: 72,
+              ),
+            ),
+          ),
+        ],
+      ) :
+      Center(
         child: GestureDetector(
           onTap: () {
             setState(() {
@@ -39,17 +72,16 @@ class _AllProfilePageState extends State<AllProfilePage> {
             });
           },
           onHorizontalDragEnd: (DragEndDetails details) {
-            if(widget.userID == "") {
-              if (details.primaryVelocity! < 0) {
-                setState(() {
-                  profileIndex = (profileIndex + 1) % Users.otherProfiles.length;
-                });
-              }
-              if (details.primaryVelocity! > 0) {
-                setState(() {
-                  profileIndex = (profileIndex - 1 + Users.otherProfiles.length) % Users.otherProfiles.length;
-                });
-              }
+            if (details.primaryVelocity! < 0) {
+              setState(() {
+                profileIndex = (profileIndex + 1) % displayUsers.length;
+                isBioExpanded = false;
+              });
+            } else if (details.primaryVelocity! > 0) {
+              setState(() {
+                profileIndex = (profileIndex - 1 + displayUsers.length) % displayUsers.length;
+                isBioExpanded = false;
+              });
             }
           },
           child: SizedBox(
@@ -57,7 +89,7 @@ class _AllProfilePageState extends State<AllProfilePage> {
             width: double.infinity,
             child: Stack(
               children: [
-                displayUser['profilepicture'] == null ?
+                displayUsers[profileIndex]['profilepicture'] == null ?
                 Image.asset(
                   'assets/ProfilePhoto1.jpg',
                   fit: BoxFit.cover,
@@ -65,7 +97,7 @@ class _AllProfilePageState extends State<AllProfilePage> {
                   height: double.infinity,
                 ) :
                 Image.network(
-                  displayUser['profilepicture'].toString(),
+                  displayUsers[profileIndex]['profilepicture'].toString(),
                   fit: BoxFit.cover,
                   width: double.infinity,
                   height: double.infinity,
@@ -86,14 +118,14 @@ class _AllProfilePageState extends State<AllProfilePage> {
                   ),
                 ),
                 Positioned(
-                  bottom: 10,
+                  bottom: reqButton ? 60 : 10,
                   left: 10,
                   right: 10,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        displayUser['username'].toString(),
+                        displayUsers[profileIndex]['username'].toString(),
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: ThemeColors.themeColor,
@@ -108,7 +140,7 @@ class _AllProfilePageState extends State<AllProfilePage> {
                           });
                         },
                         child: Text(
-                          displayUser['bio'].toString(),
+                          displayUsers[profileIndex]['bio'].toString(),
                           overflow: isBioExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
                           maxLines: isBioExpanded ? null : 2,
                           style: const TextStyle(
@@ -118,6 +150,51 @@ class _AllProfilePageState extends State<AllProfilePage> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+                Positioned(
+                  bottom: reqButton ? 10 : 0,
+                  left: 10,
+                  right: 10,
+                  child: SizedBox(
+                    height: reqButton ? 40 : 0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            setState(() {
+                              profileIndex = (profileIndex + 1) % displayUsers.length;
+                              isBioExpanded = false;
+                            });
+                          },
+                          child: const Text(
+                            'Skip >>',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        const Divider(
+                          height: 5,
+                          color: Colors.white,
+                        ),
+                        TextButton(
+                          onPressed: () {
+
+                          },
+                          child: Text(
+                            matchBtnText,
+                            style: TextStyle(
+                              color: ThemeColors.themeColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

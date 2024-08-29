@@ -39,7 +39,7 @@ class OtherProfilesSection extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const AllProfilePage(userID: ""),));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const AllProfilePage(userID: "All Profiles"),));
             },
             child: Container(
               height: 300,
