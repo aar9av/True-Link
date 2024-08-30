@@ -65,9 +65,19 @@ class PostPage extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => AllProfilePage(userID: posts[index]['userData']['userID']),));
+                            if(!isAll) {
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) =>
+                                    AllProfilePage(
+                                        userID: posts[index]['userData']['userID']),));
+                            }
                           },
-                          child: Container(
+                          child: isAll ?
+                          const SizedBox(
+                            height: 0,
+                            width: 0,
+                          ) :
+                          Container(
                             decoration: BoxDecoration(
                               border: Border.all(
                                 color: ThemeColors.gradientColor2,
@@ -95,12 +105,17 @@ class PostPage extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => AllProfilePage(userID: posts[index]['userData']['userID']),));
+                            if(!isAll) {
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) =>
+                                    AllProfilePage(
+                                        userID: posts[index]['userData']['userID']),));
+                            }
                           },
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width - 200,
                             child: Text(
-                              posts[index]['userData']['username'],
+                              isAll ? 'Random User' : posts[index]['userData']['username'],
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 color: ThemeColors.themeColor,

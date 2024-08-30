@@ -1,15 +1,13 @@
 import "package:flutter/material.dart";
 import 'package:true_link/UI/ThemeColors.dart';
+import 'package:postgres/postgres.dart';
 
 import 'Activities/HomePage/HomePage.dart';
 import 'Data&Methods/Users.dart';
+import 'Hidden Files/Routes.dart';
 
 Future<void> main() async {
-  if(await Users.getUserData()) {
-    print("Success");
-  } else {
-    print("Unable to load All Users");
-  }
+  await Users.getUserData();
   runApp(const TrueLink());
 }
 

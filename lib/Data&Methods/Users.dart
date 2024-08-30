@@ -1,39 +1,47 @@
-import 'dart:convert';
-import 'dart:math';
-
+import 'package:postgres/postgres.dart';
 import '../Hidden Files/Routes.dart';
-import 'package:http/http.dart' as http;
 
 class Users {
 
-  static List<dynamic> allUserData = [];
-  static Map<String, dynamic> currentUserData = {};
-  static Map<String, dynamic> matchedUserData = {};
-  static List<dynamic> otherProfiles = [];
+  static dynamic allUserData;
+  static dynamic currentUserData;
+  static dynamic matchedUserData;
+  static dynamic otherProfiles;
 
-  static List<dynamic> matchRequests = [];
-  static List<dynamic> pendingRequests = [];
-  static List<dynamic> userHistory = [];
+  static dynamic matchRequests;
+  static dynamic pendingRequests;
+  static dynamic userHistory;
 
-  static List<dynamic> chats = [];
+  static dynamic chats;
 
-  static List<dynamic> allPosts = [];
-  static List<dynamic> tagPosts = [];
+  static dynamic allPosts;
+  static dynamic tagPosts;
 
-  static Future<bool> getUserData() async{
-    if(await getAllUsersData()) {
-      extractUserData();
-      extractRequests(await getAllRequests());
-      extractHistory(await getAllHistory());
-      extractChats(await getAllChats());
-      extractPosts(await getAllPosts());
-      extractTags(await getAllTags());
-      return true;
+  static Future<void> getUserData() async{
+    try {
+      var uri = Uri.parse(Routes.connectionString);
+      final conn = await Connection.open(Endpoint(
+        host: uri.host,
+        database: uri.path.substring(1),
+        username: uri.userInfo.split(':').first,
+        password: uri.userInfo.split(':').last,
+      ));
+      Users.allUserData = await conn.execute("SELECT * FROM Users");
+      Users.currentUserData = await conn.execute("SELECT * FROM Users WHERE userID = '1'");
+      Users.matchedUserData = await conn.execute("SELECT * FROM Users WHERE userID = '${Users.currentUserData[0][6]}'");
+      Users.otherProfiles = await conn.execute("SELECT * FROM Users WHERE userID != '${Users.matchedUserData[0][0]}' AND gender != ${Users.currentUserData[0][3]} AND userID NOT IN (SELECT receiverID FROM Requests WHERE senderID = '${Users.currentUserData[0][0]}' UNION SELECT senderID FROM Requests WHERE receiverID = '${Users.currentUserData[0][0]}' UNION SELECT matchedID FROM History WHERE userID = '${Users.currentUserData[0][0]}' UNION SELECT userID FROM History WHERE matchedID = '${Users.currentUserData[0][0]}')");
+      Users.matchRequests = await conn.execute("SELECT * FROM Users u JOIN Requests r ON u.userID = r.receiverID AND u.userID = '${Users.currentUserData[0][0]}' ORDER BY r.timestamp");
+      Users.pendingRequests = await conn.execute("SELECT * FROM Users u JOIN Requests r ON u.userID = r.senderID AND u.userID = '${Users.currentUserData[0][0]}' ORDER BY r.timestamp");
+      Users.userHistory = await conn.execute("SELECT u.*, h.timestamp FROM Users u JOIN (SELECT matchedID AS userID, timestamp FROM History WHERE userID = '${Users.currentUserData[0][0]}' UNION SELECT userID, timestamp FROM History WHERE matchedID = '${Users.currentUserData[0][0]}') h ON u.userID = h.userID ORDER BY h.timestamp");
+      Users.chats = await conn.execute("SELECT * FROM Chats WHERE(senderID = '${Users.currentUserData[0][0]}' AND receiverID = '${Users.matchedUserData[0][0]}') OR (senderID = '${Users.matchedUserData[0][0]}' AND receiverID = '${Users.currentUserData[0][0]}') ORDER BY timestamp");
+      Users.allPosts = await conn.execute("SELECT * FROM Posts p JOIN Users u ON p.userID = u.userID ORDER BY timestamp");
+      Users.tagPosts = await conn.execute("SELECT * FROM Tags t, Posts p, Users u WHERE t.messageID = p.messageID AND t.userID = '${Users.currentUserData[0][0]}' AND p.userID = u.userID");
+    } catch(e) {
+      print(e);
     }
-    return false;
   }
 
-  static Future<bool> getAllUsersData() async{
+  /*static Future<bool> getAllUsersData() async{
     String url = '${Routes.initialroute}/getUsers';
     try {
       final response = await http.get(Uri.parse(url));
@@ -229,6 +237,6 @@ class Users {
         }
       }
     }
-  }
+  }*/
 
 }
