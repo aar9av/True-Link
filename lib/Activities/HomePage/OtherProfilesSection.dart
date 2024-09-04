@@ -1,17 +1,24 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:true_link/Data&Methods/Requests.dart';
 
 import '../../UI/ThemeColors.dart';
-import '../../Data&Methods/Users.dart';
 import '../Profile/AllProfilePage.dart';
 
-class OtherProfilesSection extends StatelessWidget {
+class OtherProfilesSection extends StatefulWidget {
   const OtherProfilesSection({super.key});
 
   @override
+  State<OtherProfilesSection> createState() => _OtherProfilesSectionState();
+}
+
+class _OtherProfilesSectionState extends State<OtherProfilesSection> {
+  @override
   Widget build(BuildContext context) {
     return Center(
-      child: Stack(
+      child: Requests.otherProfiles.isEmpty ?
+      const SizedBox() :
+      Stack(
         children: [
           Transform.rotate(
             angle: 5 * pi / 180,
@@ -29,7 +36,7 @@ class OtherProfilesSection extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(17),
                 child: Image.network(
-                  Users.otherProfiles[1 % Users.otherProfiles.length]['profilepicture'].toString(),
+                  Requests.otherProfiles[1 % Requests.otherProfiles.length][5].toString(),
                   fit: BoxFit.cover,
                   width: double.infinity,
                   height: double.infinity,
@@ -39,7 +46,8 @@ class OtherProfilesSection extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const AllProfilePage(userID: "All Profiles"),));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const AllProfilePage(userID: -1),));
+              setState(() {});
             },
             child: Container(
               height: 300,
@@ -56,7 +64,7 @@ class OtherProfilesSection extends StatelessWidget {
                 child: Stack(
                   children: [
                     Image.network(
-                      Users.otherProfiles[0]['profilepicture'].toString(),
+                      Requests.otherProfiles[0][5].toString(),
                       fit: BoxFit.cover,
                       width: double.infinity,
                       height: double.infinity,
@@ -84,7 +92,7 @@ class OtherProfilesSection extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            Users.otherProfiles[0]['username'].toString(),
+                            Requests.otherProfiles[0][2].toString(),
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                               color: Colors.white,
@@ -93,7 +101,7 @@ class OtherProfilesSection extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            Users.otherProfiles[0]['bio'].toString(),
+                            Requests.otherProfiles[0][4].toString(),
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                               color: Colors.white,

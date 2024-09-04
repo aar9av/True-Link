@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../UI/ThemeColors.dart';
 import '../../Data&Methods/Users.dart';
-import '../ChatPage.dart';
+import '../Profile/ChatPage.dart';
 
 class MatchedUserSection extends StatelessWidget {
   const MatchedUserSection({super.key});
@@ -32,13 +32,8 @@ class MatchedUserSection extends StatelessWidget {
                 borderRadius: BorderRadius.circular(17),
                 child: Stack(
                   children: [
-                    Users.matchedUserData['profilepicture'] == null ?
-                    Image.asset(
-                      'assets/ProfilePhoto1.jpg',
-                      fit: BoxFit.cover,
-                    ) :
                     Image.network(
-                      Users.matchedUserData['profilepicture'],
+                      Users.matchedUserData[0][5],
                       fit: BoxFit.cover,
                       height: 150,
                       width: 150,
@@ -63,7 +58,7 @@ class MatchedUserSection extends StatelessWidget {
                       left: 10,
                       right: 10,
                       child: Text(
-                        Users.matchedUserData['username'],
+                        Users.matchedUserData[0][2],
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           color: Colors.white,
@@ -96,7 +91,7 @@ class MatchedUserSection extends StatelessWidget {
                     height: 100,
                     child: SingleChildScrollView(
                       child: Text(
-                        Users.matchedUserData['bio'],
+                        Users.matchedUserData[0][4],
                         style: const TextStyle(
                           fontSize: 15,
                           color: Colors.white,

@@ -14,68 +14,69 @@ class SearchBarWidget extends StatefulWidget {
 }
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
+  final focusScopeNode = FocusScopeNode();
   TextEditingController findValue = TextEditingController();
   List<dynamic> searchedUser = [];
-  late final FocusNode _searchFocusNode = FocusNode();
   bool isSearch = false;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          height: 40,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: ThemeColors.themeColor.withOpacity(0.5),
-                blurRadius: 6,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: TextField(
-            focusNode: _searchFocusNode,
-            keyboardType: TextInputType.text,
-            controller: findValue,
-            onChanged: (value) {
-              setState(() {
-                isSearch = (value != "");
-              });
-              findUser(value);
-            },
-            decoration: InputDecoration(
-              hintText: 'Search Profile...',
-              hintStyle: const TextStyle(
-                color: Colors.grey,
-                fontWeight: FontWeight.w300,
-                wordSpacing: 1,
-              ),
-              prefixIcon: const Icon(
-                Icons.search,
-                color: Colors.grey,
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-                borderSide: const BorderSide(
-                  color: Colors.grey,
-                  width: 2.0,
+        FocusScope(
+          child: Container(
+            height: 40,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: ThemeColors.themeColor.withOpacity(0.5),
+                  blurRadius: 6,
+                  offset: const Offset(0, 4),
                 ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-                borderSide: BorderSide(
-                  color: ThemeColors.themeColor,
-                  width: 2.0,
-                ),
-              ),
-              contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
+              ],
             ),
-            style: const TextStyle(
-              color: Colors.grey,
+            child: TextField(
+              keyboardType: TextInputType.text,
+              controller: findValue,
+              onChanged: (value) {
+                setState(() {
+                  isSearch = (value != "");
+                });
+                findUser(value);
+              },
+              decoration: InputDecoration(
+                hintText: 'Search Profile...',
+                hintStyle: const TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w300,
+                  wordSpacing: 1,
+                ),
+                prefixIcon: const Icon(
+                  Icons.search,
+                  color: Colors.grey,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: const BorderSide(
+                    color: Colors.grey,
+                    width: 2.0,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(
+                    color: ThemeColors.themeColor,
+                    width: 2.0,
+                  ),
+                ),
+                contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
+              ),
+              style: const TextStyle(
+                color: Colors.grey,
+              ),
             ),
           ),
         ),
@@ -91,7 +92,8 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    String userID = searchedUser[index]['userID'].toString();
+                    focusScopeNode.unfocus();
+                    int userID = searchedUser[index][0];
                     setState(() {
                       findValue.clear();
                       searchedUser.clear();
@@ -101,11 +103,11 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                   child: ListTile(
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(
-                        searchedUser[index]['profilepicture'],
+                        searchedUser[index][5],
                       ),
                     ),
                     title: Text(
-                      searchedUser[index]['username'],
+                      searchedUser[index][2],
                       style: TextStyle(
                         color: ThemeColors.themeColor,
                         fontSize: 24,
@@ -113,7 +115,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                       ),
                     ),
                     subtitle: Text(
-                      searchedUser[index]['bio'],
+                      searchedUser[index][1],
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: const TextStyle(
@@ -135,12 +137,14 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
   void findUser(String value) {
     setState(() {
       value = value.toLowerCase();
-      if(value == "") {
+      searchedUser.clear();
+      for(int i=0; i<Users.allUserData.length; ++i) {
+        if(Users.allUserData[i][2].toLowerCase().contains(value)) {
+          searchedUser.add(Users.allUserData[i]);
+        }
+      }
+      if (value.isEmpty) {
         searchedUser.clear();
-      } else {
-        searchedUser = Users.allUserData.where((user) {
-          return user['username'].toLowerCase().contains(value);
-        }).toList();
       }
     });
   }

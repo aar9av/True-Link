@@ -38,7 +38,7 @@ class Header extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(30),
               child: Image.network(
-                Users.currentUserData['profilepicture'],
+                Users.currentUserData[0][5],
                 fit: BoxFit.cover,
                 height: 60,
                 width: 60,
@@ -50,7 +50,7 @@ class Header extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Hi! ${Users.currentUserData['username']}',
+                'Hi! ${Users.currentUserData[0][2]}',
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   color: Colors.white,
@@ -59,7 +59,7 @@ class Header extends StatelessWidget {
                 ),
               ),
               Text(
-                Users.currentUserData['email'],
+                Users.currentUserData[0][1],
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: ThemeColors.themeColor,

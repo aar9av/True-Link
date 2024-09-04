@@ -15,12 +15,24 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   TextEditingController name = TextEditingController();
   TextEditingController bio = TextEditingController();
-  bool? gender = Users.currentUserData['gender'];
+  bool gender = Users.currentUserData[0][3];
+  bool isLoading = false;
+  bool chkName = false;
+  bool chkBio = false;
+
+  @override
+  initState() {
+    super.initState();
+    setInitialValue();
+  }
+
+  void setInitialValue() {
+    name.text = Users.currentUserData[0][2];
+    bio.text = Users.currentUserData[0][4];
+  }
 
   @override
   Widget build(BuildContext context) {
-    name.text = Users.currentUserData['username'];
-    bio.text = Users.currentUserData['bio'];
     return Scaffold(
       body: Stack(
         children: [
@@ -30,9 +42,7 @@ class _EditProfileState extends State<EditProfile> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: 50,
-                ),
+                const SizedBox(height: 50),
                 SizedBox(
                   height: 250,
                   child: Column(
@@ -43,16 +53,16 @@ class _EditProfileState extends State<EditProfile> {
                         width: 130,
                         margin: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(80),
-                            border: Border.all(
-                              color: ThemeColors.themeColor,
-                              width: 2,
-                            )
+                          borderRadius: BorderRadius.circular(80),
+                          border: Border.all(
+                            color: ThemeColors.themeColor,
+                            width: 2,
+                          ),
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(80),
                           child: Image.network(
-                            Users.currentUserData['profilepicture'],
+                            Users.currentUserData[0][5],
                             fit: BoxFit.cover,
                             height: 60,
                             width: 60,
@@ -60,7 +70,7 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                       ),
                       Text(
-                        Users.currentUserData['username'],
+                        Users.currentUserData[0][2],
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: ThemeColors.themeColor,
@@ -69,7 +79,7 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                       ),
                       Text(
-                        Users.currentUserData['email'],
+                        Users.currentUserData[0][1],
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           color: Colors.white,
@@ -80,21 +90,24 @@ class _EditProfileState extends State<EditProfile> {
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 SizedBox(
                   height: 220,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(left: 20, right: 20),
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
                         color: ThemeColors.gradientColor2,
                         height: 40,
                         child: TextField(
                           keyboardType: TextInputType.text,
                           controller: name,
+                          onChanged: (value) {
+                            setState(() {
+                              chkName = name.text.isEmpty;
+                            });
+                          },
                           decoration: InputDecoration(
                             hintText: 'Enter Full Name',
                             hintStyle: const TextStyle(
@@ -106,15 +119,11 @@ class _EditProfileState extends State<EditProfile> {
                               color: Colors.grey,
                             ),
                             border: InputBorder.none,
-                            enabledBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.grey,
-                              ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: chkName ? const BorderSide(color: Colors.redAccent) : const BorderSide(color: Colors.grey),
                             ),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ThemeColors.themeColor,
-                              ),
+                              borderSide: chkName ? const BorderSide(color: Colors.redAccent) : BorderSide(color: ThemeColors.themeColor),
                             ),
                           ),
                           style: const TextStyle(
@@ -124,7 +133,7 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 20, right: 20),
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -184,13 +193,18 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 20, right: 20),
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
                         color: ThemeColors.gradientColor2,
                         height: 90,
                         child: TextField(
                           keyboardType: TextInputType.multiline,
                           controller: bio,
                           maxLines: 10,
+                          onChanged: (value) {
+                            setState(() {
+                              chkBio = bio.text.isEmpty;
+                            });
+                          },
                           decoration: InputDecoration(
                             hintText: 'Write something about yourself...',
                             hintStyle: const TextStyle(
@@ -202,15 +216,11 @@ class _EditProfileState extends State<EditProfile> {
                               color: Colors.grey,
                             ),
                             border: InputBorder.none,
-                            enabledBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.grey,
-                              ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: chkBio ? const BorderSide(color: Colors.redAccent) : const BorderSide(color: Colors.grey),
                             ),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ThemeColors.themeColor,
-                              ),
+                              borderSide: chkBio ? const BorderSide(color: Colors.redAccent) : BorderSide(color: ThemeColors.themeColor),
                             ),
                           ),
                           style: const TextStyle(
@@ -222,16 +232,38 @@ class _EditProfileState extends State<EditProfile> {
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 50,
-                ),
+                const SizedBox(height: 50),
                 GestureDetector(
-                  onTap: () {
-                    print(name.text);
-                    print(gender);
-                    print(bio.text);
-                    Navigator.pop(context);
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage(),));
+                  onTap: isLoading
+                      ? null
+                      : () async {
+                    if (name.text.isNotEmpty && bio.text.isNotEmpty) {
+                      setState(() {
+                        isLoading = true;
+                      });
+                      if (await Users.updateUser(name.text, gender, bio.text)) {
+                        Navigator.pop(context);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomePage(),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Text('Unable to update profile!'),
+                            backgroundColor:
+                            ThemeColors.gradientColor1.withOpacity(0.9),
+                            margin: const EdgeInsets.all(10),
+                            behavior: SnackBarBehavior.floating,
+                          ),
+                        );
+                      }
+                      setState(() {
+                        isLoading = false;
+                      });
+                    }
                   },
                   child: Container(
                     height: 50,
@@ -248,7 +280,13 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                       ],
                     ),
-                    child: const Center(
+                    child: isLoading
+                        ? Center(
+                      child: CircularProgressIndicator(
+                        color: ThemeColors.gradientColor1,
+                      ),
+                    )
+                        : const Center(
                       child: Text(
                         'Save Profile',
                         style: TextStyle(
@@ -260,12 +298,10 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 50,
-                ),
+                const SizedBox(height: 50),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

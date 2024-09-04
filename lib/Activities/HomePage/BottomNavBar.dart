@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:true_link/Activities/Profile/EditProfile.dart';
-import 'package:true_link/main.dart';
 import '../../UI/ThemeColors.dart';
 import '../../Data&Methods/Users.dart';
-import '../PostPage.dart';
+import '../Confession/PostPage.dart';
 import '../Profile/AllProfilePage.dart';
-import 'HomePage.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -39,6 +37,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               IconButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => PostPage(isAll: true),));
+                  setState(() {});
                 },
                 icon: const Icon(
                   Icons.short_text_outlined,
@@ -49,7 +48,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               SizedBox(width: MediaQuery.of(context).size.width / 3),
               IconButton(
                 onPressed: () async {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AllProfilePage(userID: "User History"),));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AllProfilePage(userID: -4),));
                 },
                 icon: const Icon(
                   Icons.history_outlined,
@@ -82,15 +81,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(36),
-                  child: Users.currentUserData['profilepicture'] == null ?
-                  Image.asset(
-                    'assets/CurrentUserProfilePicture.jpg',
-                    fit: BoxFit.cover,
-                    height: 72,
-                    width: 72,
-                  ) :
-                  Image.network(
-                    Users.currentUserData['profilepicture'],
+                  child: Image.network(
+                    Users.currentUserData[0][5],
                     fit: BoxFit.cover,
                     height: 72,
                     width: 72,

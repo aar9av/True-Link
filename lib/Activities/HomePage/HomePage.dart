@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:true_link/Activities/HomePage/MatchedUserSection.dart';
-import 'package:true_link/Activities/PostPage.dart';
+import 'package:true_link/Activities/Confession/PostPage.dart';
 import 'package:true_link/Activities/Profile/AllProfilePage.dart';
 import 'package:true_link/UI/Background.dart';
 import 'package:true_link/UI/ThemeColors.dart';
 
+import '../../Data&Methods/Posts.dart';
+import '../../Data&Methods/Requests.dart';
 import '../../Data&Methods/Users.dart';
 import '../Profile/EditProfile.dart';
 import 'BottomNavBar.dart';
 import 'Header.dart';
 import 'OtherProfilesSection.dart';
 import 'SearchBarWidget.dart';
-import '../Tags.dart';
 
 class HomePage extends StatefulWidget {
   static bool isSearchOn = false;
@@ -113,10 +114,10 @@ class _HomePageState extends State<HomePage> {
                         ),
                         const SearchBarWidget(),
                         Users.matchedUserData.isEmpty ?
-                        Container(
-                          height: 0,
-                        ) :
+                        const SizedBox() :
                         const MatchedUserSection(),
+                        Requests.otherProfiles.isEmpty ?
+                        const SizedBox() :
                         Container(
                           margin: const EdgeInsets.all(20),
                           child: const Text(
@@ -128,10 +129,8 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        Users.otherProfiles.isEmpty ?
-                        Container(
-                          height: 0,
-                        ) :
+                        Requests.otherProfiles.isEmpty ?
+                        const SizedBox() :
                         const OtherProfilesSection(),
                         const SizedBox(
                           height: 30,
@@ -139,6 +138,7 @@ class _HomePageState extends State<HomePage> {
                         GestureDetector(
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute(builder: (context) => PostPage(isAll: false),));
+                            setState(() {});
                           },
                           child: Container(
                             margin: const EdgeInsets.only(
@@ -174,7 +174,7 @@ class _HomePageState extends State<HomePage> {
                                         fontWeight: FontWeight.w300,
                                       ),
                                     ),
-                                    if (Users.tagPosts.isNotEmpty)
+                                    if (Posts.tagPosts.isNotEmpty)
                                       Container(
                                         margin: const EdgeInsets.only(left: 5, bottom: 12),
                                         height: 4,
@@ -196,7 +196,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const AllProfilePage(userID: "Match Requests"),));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const AllProfilePage(userID: -2),));
+                            setState(() {});
                           },
                           child: Container(
                             margin: const EdgeInsets.only(
@@ -232,7 +233,7 @@ class _HomePageState extends State<HomePage> {
                                         fontWeight: FontWeight.w300,
                                       ),
                                     ),
-                                    if (Users.matchRequests.isNotEmpty)
+                                    if (Requests.matchRequests.isNotEmpty)
                                       Container(
                                         margin: const EdgeInsets.only(left: 5, bottom: 12),
                                         height: 4,
@@ -257,9 +258,10 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const AllProfilePage(userID: "Pending Requests"),
+                                builder: (context) => const AllProfilePage(userID: -3),
                               ),
                             );
+                            setState(() {});
                           },
                           child: Container(
                             margin: const EdgeInsets.only(
@@ -295,7 +297,7 @@ class _HomePageState extends State<HomePage> {
                                         fontWeight: FontWeight.w300,
                                       ),
                                     ),
-                                    if (Users.pendingRequests.isNotEmpty)
+                                    if (Requests.pendingRequests.isNotEmpty)
                                       Container(
                                         margin: const EdgeInsets.only(left: 5, bottom: 12),
                                         height: 4,
@@ -325,6 +327,43 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
+          Users.currentUserData[0][4] == '' || Users.currentUserData[0][5] == 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png' ?
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: ThemeColors.gradientColor1.withOpacity(0.9),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 60,
+                ),
+                Text(
+                  'Hi! ${Users.currentUserData[0][2]}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: ThemeColors.themeColor,
+                    fontSize: 30,
+                  ),
+                ),
+                const Text(
+                  '\nfirst complete your profile\nby tap on profile button\nappear in bottom\n',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                  ),
+                ),
+                Icon(
+                  Icons.keyboard_arrow_down,
+                  size: 72,
+                  color: ThemeColors.themeColor,
+                ),
+              ],
+            ),
+          ) :
+          const SizedBox(),
         ],
       ),
       bottomNavigationBar: const BottomNavBar(),
