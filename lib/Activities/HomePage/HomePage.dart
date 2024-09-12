@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:true_link/Activities/HomePage/MatchedUserSection.dart';
 import 'package:true_link/Activities/Confession/PostPage.dart';
 import 'package:true_link/Activities/Profile/AllProfilePage.dart';
-import 'package:true_link/UI/Background.dart';
-import 'package:true_link/UI/ThemeInfo.dart';
 
 import '../../Data&Methods/Posts.dart';
 import '../../Data&Methods/Requests.dart';
 import '../../Data&Methods/Users.dart';
+import '../../Initial Files/Background.dart';
+import '../../Initial Files/ThemeInfo.dart';
 import '../Profile/EditProfile.dart';
 import 'BottomNavBar.dart';
 import 'Header.dart';

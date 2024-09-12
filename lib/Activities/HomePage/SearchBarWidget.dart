@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:true_link/Activities/Profile/AllProfilePage.dart';
 
-import '../../UI/ThemeInfo.dart';
+import '../../Initial Files/ThemeInfo.dart';
 import '../../Data&Methods/Users.dart';
 
 class SearchBarWidget extends StatefulWidget {

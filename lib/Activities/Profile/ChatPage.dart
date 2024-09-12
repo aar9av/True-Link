@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:true_link/Activities/HomePage/HomePage.dart';
 import 'package:true_link/Data&Methods/Chats.dart';
-import 'package:true_link/UI/ThemeInfo.dart';
 
 import '../../Data&Methods/Users.dart';
+import '../../Initial Files/ThemeInfo.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});

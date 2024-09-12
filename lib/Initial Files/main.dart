@@ -2,13 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import "package:flutter/material.dart";
 import 'package:postgres/postgres.dart';
-import 'package:true_link/LoginPage.dart';
-import 'package:true_link/UI/ThemeInfo.dart';
-
-import 'Activities/HomePage/HomePage.dart';
-import 'Data&Methods/Users.dart';
-import 'Hidden Files/PrivateData.dart';
-import 'UI/Background.dart';
+import 'package:true_link/Initial%20Files/LoginPage.dart';
+import '../Activities/HomePage/HomePage.dart';
+import '../Data&Methods/Users.dart';
+import '../Hidden Files/PrivateData.dart';
+import 'Background.dart';
+import 'ThemeInfo.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
