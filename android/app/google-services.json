@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "900230553988",
+    "project_id": "true-link-a41f2",
+    "storage_bucket": "true-link-a41f2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:900230553988:android:7d0b8eb3f455235057fdd1",
+        "android_client_info": {
+          "package_name": "com.example.true_link"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLMxYlklybod24dQWi5Z3jMxIrHt4ozG8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

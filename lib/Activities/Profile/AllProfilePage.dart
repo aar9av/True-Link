@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:true_link/Data&Methods/Requests.dart';
 import 'package:true_link/UI/Background.dart';
-import 'package:true_link/UI/ThemeColors.dart';
+import 'package:true_link/UI/ThemeInfo.dart';
 import '../../Data&Methods/Users.dart';
 
 class AllProfilePage extends StatefulWidget {
@@ -46,7 +46,7 @@ class _AllProfilePageState extends State<AllProfilePage> {
               content: const Text(
                 'Unable to fetch history !!!',
               ),
-              backgroundColor: ThemeColors.gradientColor1.withOpacity(0.9),
+              backgroundColor: ThemeInfo.gradientColor1.withOpacity(0.9),
               margin: const EdgeInsets.all(10),
               behavior: SnackBarBehavior.floating,
             ),
@@ -108,14 +108,16 @@ class _AllProfilePageState extends State<AllProfilePage> {
           const Background(),
           Center(
             child: isLoading ?
-            CircularProgressIndicator(
-              color: ThemeColors.themeColor,
+            Image.asset(
+              ThemeInfo.loadingIcon,
+              height: 100,
+              color: ThemeInfo.themeColor,
             ) :
             Text(
               'No profiles\nto show!!!',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: ThemeColors.themeColor,
+                color: ThemeInfo.themeColor,
                 fontSize: 36,
               ),
             ),
@@ -179,7 +181,7 @@ class _AllProfilePageState extends State<AllProfilePage> {
                         displayUsers[profileIndex][2].toString(),
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          color: ThemeColors.themeColor,
+                          color: ThemeInfo.themeColor,
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                         ),
@@ -228,8 +230,10 @@ class _AllProfilePageState extends State<AllProfilePage> {
                         SizedBox(
                           height: 20,
                           width: 20,
-                          child: CircularProgressIndicator(
-                            color: ThemeColors.themeColor,
+                          child: Image.asset(
+                            ThemeInfo.loadingIcon,
+                            height: 100,
+                            color: ThemeInfo.themeColor,
                           ),
                         ) :
                         TextButton(
@@ -253,7 +257,7 @@ class _AllProfilePageState extends State<AllProfilePage> {
                                         color: Colors.white,
                                       ),
                                     ),
-                                    backgroundColor: ThemeColors.gradientColor1,
+                                    backgroundColor: ThemeInfo.gradientColor1,
                                     actions: <Widget>[
                                       TextButton(
                                         onPressed: () {
@@ -262,7 +266,7 @@ class _AllProfilePageState extends State<AllProfilePage> {
                                         child: Text(
                                           'Cancel',
                                           style: TextStyle(
-                                            color: ThemeColors.themeColor,
+                                            color: ThemeInfo.themeColor,
                                           ),
                                         ),
                                       ),
@@ -281,7 +285,7 @@ class _AllProfilePageState extends State<AllProfilePage> {
                                                   content: const Text(
                                                     'Unable to send your request!!!',
                                                   ),
-                                                  backgroundColor: ThemeColors
+                                                  backgroundColor: ThemeInfo
                                                       .gradientColor1
                                                       .withOpacity(0.9),
                                                   margin: const EdgeInsets.all(
@@ -319,7 +323,7 @@ class _AllProfilePageState extends State<AllProfilePage> {
                                     content: const Text(
                                       'Unable to cancel this profile!!!',
                                     ),
-                                    backgroundColor: ThemeColors.gradientColor1.withOpacity(0.9),
+                                    backgroundColor: ThemeInfo.gradientColor1.withOpacity(0.9),
                                     margin: const EdgeInsets.all(10),
                                     behavior: SnackBarBehavior.floating,
                                   ),
@@ -349,7 +353,7 @@ class _AllProfilePageState extends State<AllProfilePage> {
                                         color: Colors.white,
                                       ),
                                     ),
-                                    backgroundColor: ThemeColors.gradientColor1,
+                                    backgroundColor: ThemeInfo.gradientColor1,
                                     actions: <Widget>[
                                       TextButton(
                                         onPressed: () {
@@ -358,7 +362,7 @@ class _AllProfilePageState extends State<AllProfilePage> {
                                         child: Text(
                                           'Cancel',
                                           style: TextStyle(
-                                            color: ThemeColors.themeColor,
+                                            color: ThemeInfo.themeColor,
                                           ),
                                         ),
                                       ),
@@ -375,7 +379,7 @@ class _AllProfilePageState extends State<AllProfilePage> {
                                                   content: const Text(
                                                     'Unable to match your request!!!',
                                                   ),
-                                                  backgroundColor: ThemeColors.gradientColor1.withOpacity(0.9),
+                                                  backgroundColor: ThemeInfo.gradientColor1.withOpacity(0.9),
                                                   margin: const EdgeInsets.all(10),
                                                   behavior: SnackBarBehavior.floating,
                                                 ),
@@ -403,7 +407,7 @@ class _AllProfilePageState extends State<AllProfilePage> {
                           child: Text(
                             matchBtnText,
                             style: TextStyle(
-                              color: ThemeColors.themeColor,
+                              color: ThemeInfo.themeColor,
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
                             ),

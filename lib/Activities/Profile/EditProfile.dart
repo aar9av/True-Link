@@ -1,9 +1,14 @@
+import 'dart:io';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:true_link/Activities/HomePage/HomePage.dart';
 import 'package:true_link/UI/Background.dart';
-import 'package:true_link/UI/ThemeColors.dart';
+import 'package:true_link/UI/ThemeInfo.dart';
 
 import '../../Data&Methods/Users.dart';
+import '../../LoginPage.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -19,6 +24,7 @@ class _EditProfileState extends State<EditProfile> {
   bool isLoading = false;
   bool chkName = false;
   bool chkBio = false;
+  XFile? avatar;
 
   @override
   initState() {
@@ -42,30 +48,83 @@ class _EditProfileState extends State<EditProfile> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
                 SizedBox(
                   height: 250,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        height: 130,
-                        width: 130,
-                        margin: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(80),
-                          border: Border.all(
-                            color: ThemeColors.themeColor,
-                            width: 2,
+                      GestureDetector(
+                        onTap: () async {
+                          final ImagePicker picker = ImagePicker();
+                          await showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: ThemeInfo.gradientColor1,
+                                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                                ),
+                                child: Wrap(
+                                  children: [
+                                    ListTile(
+                                      leading: const Icon(Icons.photo_library, color: Colors.white,),
+                                      title: const Text('Gallery', style: TextStyle(color: Colors.white,),),
+                                      onTap: () async {
+                                        Navigator.of(context).pop();
+                                        final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+                                        if (image != null) {
+                                          setState(() {
+                                            avatar = image;
+                                          });
+                                        }
+                                      },
+                                    ),
+                                    ListTile(
+                                      leading: const Icon(Icons.camera_alt, color: Colors.white,),
+                                      title: const Text('Camera', style: TextStyle(color: Colors.white,),),
+                                      onTap: () async {
+                                        Navigator.of(context).pop();
+                                        final XFile? image = await picker.pickImage(source: ImageSource.camera);
+                                        if (image != null) {
+                                          setState(() {
+                                            avatar = image;
+                                          });
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Container(
+                          height: 130,
+                          width: 130,
+                          margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(80),
+                            border: Border.all(
+                              color: ThemeInfo.themeColor,
+                              width: 2,
+                            ),
                           ),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(80),
-                          child: Image.network(
-                            Users.currentUserData[0][5],
-                            fit: BoxFit.cover,
-                            height: 60,
-                            width: 60,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(80),
+                            child: avatar != null ?
+                            Image.file(
+                              File(avatar!.path),
+                              fit: BoxFit.cover,
+                              height: 60,
+                              width: 60,
+                            ) :
+                            Image.network(
+                              Users.currentUserData[0][5],
+                              fit: BoxFit.cover,
+                              height: 60,
+                              width: 60,
+                            ),
                           ),
                         ),
                       ),
@@ -73,7 +132,7 @@ class _EditProfileState extends State<EditProfile> {
                         Users.currentUserData[0][2],
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          color: ThemeColors.themeColor,
+                          color: ThemeInfo.themeColor,
                           fontSize: 32,
                           fontWeight: FontWeight.w600,
                         ),
@@ -98,7 +157,7 @@ class _EditProfileState extends State<EditProfile> {
                     children: [
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 20),
-                        color: ThemeColors.gradientColor2,
+                        color: ThemeInfo.gradientColor2,
                         height: 40,
                         child: TextField(
                           keyboardType: TextInputType.text,
@@ -123,7 +182,7 @@ class _EditProfileState extends State<EditProfile> {
                               borderSide: chkName ? const BorderSide(color: Colors.redAccent) : const BorderSide(color: Colors.grey),
                             ),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: chkName ? const BorderSide(color: Colors.redAccent) : BorderSide(color: ThemeColors.themeColor),
+                              borderSide: chkName ? const BorderSide(color: Colors.redAccent) : BorderSide(color: ThemeInfo.themeColor),
                             ),
                           ),
                           style: const TextStyle(
@@ -157,7 +216,7 @@ class _EditProfileState extends State<EditProfile> {
                                 ),
                                 value: true,
                                 groupValue: gender,
-                                activeColor: ThemeColors.themeColor,
+                                activeColor: ThemeInfo.themeColor,
                                 onChanged: (value) {
                                   setState(() {
                                     gender = true;
@@ -179,7 +238,7 @@ class _EditProfileState extends State<EditProfile> {
                                 ),
                                 value: false,
                                 groupValue: gender,
-                                activeColor: ThemeColors.themeColor,
+                                activeColor: ThemeInfo.themeColor,
                                 onChanged: (value) {
                                   setState(() {
                                     gender = false;
@@ -194,7 +253,7 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 20),
-                        color: ThemeColors.gradientColor2,
+                        color: ThemeInfo.gradientColor2,
                         height: 90,
                         child: TextField(
                           keyboardType: TextInputType.multiline,
@@ -220,7 +279,7 @@ class _EditProfileState extends State<EditProfile> {
                               borderSide: chkBio ? const BorderSide(color: Colors.redAccent) : const BorderSide(color: Colors.grey),
                             ),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: chkBio ? const BorderSide(color: Colors.redAccent) : BorderSide(color: ThemeColors.themeColor),
+                              borderSide: chkBio ? const BorderSide(color: Colors.redAccent) : BorderSide(color: ThemeInfo.themeColor),
                             ),
                           ),
                           style: const TextStyle(
@@ -232,16 +291,16 @@ class _EditProfileState extends State<EditProfile> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 40),
                 GestureDetector(
                   onTap: isLoading
                       ? null
                       : () async {
-                    if (name.text.isNotEmpty && bio.text.isNotEmpty) {
+                    if (name.text.isNotEmpty && bio.text.isNotEmpty && (Users.currentUserData[0][2] != 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png' || avatar != null)) {
                       setState(() {
                         isLoading = true;
                       });
-                      if (await Users.updateUser(name.text, gender, bio.text)) {
+                      if (await Users.updateUser(name.text, gender, bio.text, avatar)) {
                         Navigator.pop(context);
                         Navigator.pushReplacement(
                           context,
@@ -254,7 +313,7 @@ class _EditProfileState extends State<EditProfile> {
                           SnackBar(
                             content: const Text('Unable to update profile!'),
                             backgroundColor:
-                            ThemeColors.gradientColor1.withOpacity(0.9),
+                            ThemeInfo.gradientColor1.withOpacity(0.9),
                             margin: const EdgeInsets.all(10),
                             behavior: SnackBarBehavior.floating,
                           ),
@@ -270,20 +329,21 @@ class _EditProfileState extends State<EditProfile> {
                     width: double.infinity,
                     margin: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: ThemeColors.themeColor,
+                      color: ThemeInfo.themeColor,
                       borderRadius: BorderRadius.circular(15),
                       boxShadow: [
                         BoxShadow(
-                          color: ThemeColors.themeColor.withOpacity(0.5),
+                          color: ThemeInfo.themeColor.withOpacity(0.5),
                           blurRadius: 6,
                           offset: const Offset(0, 6),
                         ),
                       ],
                     ),
-                    child: isLoading
-                        ? Center(
-                      child: CircularProgressIndicator(
-                        color: ThemeColors.gradientColor1,
+                    child: isLoading ? Center(
+                      child: Image.asset(
+                        ThemeInfo.loadingIcon,
+                        height: 100,
+                        color: ThemeInfo.gradientColor1,
                       ),
                     )
                         : const Center(
@@ -298,7 +358,45 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 50),
+                GestureDetector(
+                  onTap: () async {
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const LoginPage()),
+                    );
+                  },
+                  child: Container(
+                    height: 50,
+                    width: double.infinity,
+                    margin: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: ThemeInfo.gradientColor1,
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: ThemeInfo.themeColor,
+                        width: 1,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: ThemeInfo.themeColor.withOpacity(0.5),
+                          blurRadius: 4,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Logout',
+                        style: TextStyle(
+                          color: ThemeInfo.themeColor,
+                          fontSize: 24,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
               ],
             ),
           ),

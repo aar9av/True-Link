@@ -3,7 +3,7 @@ import 'package:true_link/Activities/HomePage/MatchedUserSection.dart';
 import 'package:true_link/Activities/Confession/PostPage.dart';
 import 'package:true_link/Activities/Profile/AllProfilePage.dart';
 import 'package:true_link/UI/Background.dart';
-import 'package:true_link/UI/ThemeColors.dart';
+import 'package:true_link/UI/ThemeInfo.dart';
 
 import '../../Data&Methods/Posts.dart';
 import '../../Data&Methods/Requests.dart';
@@ -36,9 +36,9 @@ class _HomePageState extends State<HomePage> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    ThemeColors.gradientColor1,
-                    ThemeColors.gradientColor2,
-                    ThemeColors.gradientColor2,
+                    ThemeInfo.gradientColor1,
+                    ThemeInfo.gradientColor2,
+                    ThemeInfo.gradientColor2,
                   ],
                 ),
               ),
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.transparent,
                   boxShadow: [
                     BoxShadow(
-                      color: ThemeColors.themeColor.withOpacity(1),
+                      color: ThemeInfo.themeColor.withOpacity(1),
                       blurRadius: 50,
                     ),
                   ],
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(10),
             width: double.infinity,
             decoration: BoxDecoration(
-              color: ThemeColors.bgColor,
+              color: ThemeInfo.bgColor,
               borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(25),
                 topLeft: Radius.circular(25),
@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                             width: 80,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                              color: ThemeColors.gradientColor1,
+                              color: ThemeInfo.gradientColor1,
                               borderRadius: const BorderRadius.all(Radius.circular(3)),
                             ),
                           ),
@@ -137,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => PostPage(isAll: false),));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const PostPage(isAll: false),));
                             setState(() {});
                           },
                           child: Container(
@@ -153,10 +153,10 @@ class _HomePageState extends State<HomePage> {
                             height: 36,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                                color: ThemeColors.gradientColor2,
+                                color: ThemeInfo.gradientColor2,
                                 border: Border(
                                     bottom: BorderSide(
-                                      color: ThemeColors.themeColor,
+                                      color: ThemeInfo.themeColor,
                                       width: 0.5,
                                     )
                                 )
@@ -188,7 +188,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 Icon(
                                   Icons.arrow_forward_outlined,
-                                  color: ThemeColors.themeColor,
+                                  color: ThemeInfo.themeColor,
                                 ),
                               ],
                             ),
@@ -212,10 +212,10 @@ class _HomePageState extends State<HomePage> {
                             height: 36,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                                color: ThemeColors.gradientColor2,
+                                color: ThemeInfo.gradientColor2,
                                 border: Border(
                                     bottom: BorderSide(
-                                      color: ThemeColors.themeColor,
+                                      color: ThemeInfo.themeColor,
                                       width: 0.5,
                                     )
                                 )
@@ -247,7 +247,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 Icon(
                                   Icons.arrow_forward_outlined,
-                                  color: ThemeColors.themeColor,
+                                  color: ThemeInfo.themeColor,
                                 ),
                               ],
                             ),
@@ -276,10 +276,10 @@ class _HomePageState extends State<HomePage> {
                             height: 36,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              color: ThemeColors.gradientColor2,
+                              color: ThemeInfo.gradientColor2,
                               border: Border(
                                 bottom: BorderSide(
-                                  color: ThemeColors.themeColor,
+                                  color: ThemeInfo.themeColor,
                                   width: 0.5,
                                 ),
                               ),
@@ -311,7 +311,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 Icon(
                                   Icons.arrow_forward_outlined,
-                                  color: ThemeColors.themeColor,
+                                  color: ThemeInfo.themeColor,
                                 ),
                               ],
                             ),
@@ -331,7 +331,7 @@ class _HomePageState extends State<HomePage> {
           Container(
             height: double.infinity,
             width: double.infinity,
-            color: ThemeColors.gradientColor1.withOpacity(0.9),
+            color: ThemeInfo.gradientColor1.withOpacity(0.9),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -343,7 +343,7 @@ class _HomePageState extends State<HomePage> {
                   'Hi! ${Users.currentUserData[0][2]}',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: ThemeColors.themeColor,
+                    color: ThemeInfo.themeColor,
                     fontSize: 30,
                   ),
                 ),
@@ -358,7 +358,7 @@ class _HomePageState extends State<HomePage> {
                 Icon(
                   Icons.keyboard_arrow_down,
                   size: 72,
-                  color: ThemeColors.themeColor,
+                  color: ThemeInfo.themeColor,
                 ),
               ],
             ),

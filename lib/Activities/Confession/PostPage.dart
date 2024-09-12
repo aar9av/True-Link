@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:true_link/UI/Background.dart';
-import 'package:true_link/UI/ThemeColors.dart';
+import 'package:true_link/UI/ThemeInfo.dart';
 
 import '../../Data&Methods/Posts.dart';
 import '../../Data&Methods/Users.dart';
@@ -10,7 +10,7 @@ import '../Profile/AllProfilePage.dart';
 
 class PostPage extends StatefulWidget {
   final isAll;
-  PostPage({super.key, this.isAll});
+  const PostPage({super.key, this.isAll});
 
   @override
   State<PostPage> createState() => _PostPageState();
@@ -63,8 +63,8 @@ class _PostPageState extends State<PostPage> {
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
               colors: [
-                ThemeColors.gradientColor1,
-                ThemeColors.themeColor.withOpacity(0.01),
+                ThemeInfo.gradientColor1,
+                ThemeInfo.themeColor.withOpacity(0.01),
               ],
             ),
           ),
@@ -75,8 +75,10 @@ class _PostPageState extends State<PostPage> {
           const Background(),
           isLoading ?
           Center(
-            child: CircularProgressIndicator(
-              color: ThemeColors.themeColor,
+            child: Image.asset(
+              ThemeInfo.loadingIcon,
+              height: 100,
+              color: ThemeInfo.themeColor,
             ),
           ) :
           ListView.builder(
@@ -86,15 +88,15 @@ class _PostPageState extends State<PostPage> {
                 margin: const EdgeInsets.only(top: 30, left: 30, right: 30),
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: ThemeColors.gradientColor2,
+                  color: ThemeInfo.gradientColor2,
                   borderRadius: const BorderRadius.all(Radius.circular(12)),
                   border: Border.all(
-                    color: ThemeColors.gradientColor2,
+                    color: ThemeInfo.gradientColor2,
                     width: 3,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: ThemeColors.themeColor.withOpacity(0.5),
+                      color: ThemeInfo.themeColor.withOpacity(0.5),
                       blurRadius: 5,
                       offset: const Offset(1, 2),
                     ),
@@ -122,13 +124,13 @@ class _PostPageState extends State<PostPage> {
                           Container(
                             decoration: BoxDecoration(
                               border: Border.all(
-                                color: ThemeColors.gradientColor2,
+                                color: ThemeInfo.gradientColor2,
                                 width: 3,
                               ),
                               borderRadius: BorderRadius.circular(36),
                               boxShadow: [
                                 BoxShadow(
-                                  color: ThemeColors.themeColor.withOpacity(0.5),
+                                  color: ThemeInfo.themeColor.withOpacity(0.5),
                                   blurRadius: 10,
                                   offset: const Offset(0, -4),
                                 ),
@@ -160,7 +162,7 @@ class _PostPageState extends State<PostPage> {
                               widget.isAll ? (posts[index][7] ? 'Mr. Random' : 'Miss. Random') : posts[index][6],
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                color: ThemeColors.themeColor,
+                                color: ThemeInfo.themeColor,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -178,14 +180,14 @@ class _PostPageState extends State<PostPage> {
                             height: 30,
                             width: 60,
                             decoration: BoxDecoration(
-                              color: ThemeColors.themeColor,
+                              color: ThemeInfo.themeColor,
                               borderRadius: const BorderRadius.all(Radius.circular(5)),
                             ),
                             child: Center(
                               child: Text(
                                 '+ TAG',
                                 style: TextStyle(
-                                  color: ThemeColors.gradientColor1,
+                                  color: ThemeInfo.gradientColor1,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -216,17 +218,17 @@ class _PostPageState extends State<PostPage> {
             child: Container(
               height: double.infinity,
               width: double.infinity,
-              color: ThemeColors.gradientColor1.withOpacity(0.9),
+              color: ThemeInfo.gradientColor1.withOpacity(0.9),
               child: Center(
                 child: Container(
                   margin: const EdgeInsets.all(40),
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: ThemeColors.gradientColor2,
+                    color: ThemeInfo.gradientColor2,
                     borderRadius: const BorderRadius.all(Radius.circular(12)),
                     boxShadow: [
                       BoxShadow(
-                        color: ThemeColors.themeColor.withOpacity(0.5),
+                        color: ThemeInfo.themeColor.withOpacity(0.5),
                         blurRadius: 7,
                         offset: const Offset(2, 4),
                       ),
@@ -241,7 +243,7 @@ class _PostPageState extends State<PostPage> {
                           child: Text(
                             'Write a confession',
                             style: TextStyle(
-                              color: ThemeColors.themeColor,
+                              color: ThemeInfo.themeColor,
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
@@ -249,7 +251,7 @@ class _PostPageState extends State<PostPage> {
                         ),
                         const SizedBox(height: 20,),
                         Container(
-                          color: ThemeColors.gradientColor1,
+                          color: ThemeInfo.gradientColor1,
                           height: 160,
                           child: TextField(
                             keyboardType: TextInputType.multiline,
@@ -273,7 +275,7 @@ class _PostPageState extends State<PostPage> {
                               ),
                               focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: ThemeColors.themeColor,
+                                  color: ThemeInfo.themeColor,
                                 ),
                               ),
                             ),
@@ -299,7 +301,7 @@ class _PostPageState extends State<PostPage> {
                                   content: const Text(
                                     'Confession added successfully !!!',
                                   ),
-                                  backgroundColor: ThemeColors.gradientColor1.withOpacity(0.9),
+                                  backgroundColor: ThemeInfo.gradientColor1.withOpacity(0.9),
                                   margin: const EdgeInsets.all(10),
                                   behavior: SnackBarBehavior.floating,
                                 ),
@@ -310,7 +312,7 @@ class _PostPageState extends State<PostPage> {
                                   content: const Text(
                                     'Unable to post your confession !!!',
                                   ),
-                                  backgroundColor: ThemeColors.gradientColor1.withOpacity(0.9),
+                                  backgroundColor: ThemeInfo.gradientColor1.withOpacity(0.9),
                                   margin: const EdgeInsets.all(10),
                                   behavior: SnackBarBehavior.floating,
                                 ),
@@ -324,11 +326,11 @@ class _PostPageState extends State<PostPage> {
                             height: 50,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              color: ThemeColors.themeColor,
+                              color: ThemeInfo.themeColor,
                               borderRadius: BorderRadius.circular(15),
                               boxShadow: [
                                 BoxShadow(
-                                  color: ThemeColors.themeColor.withOpacity(0.5),
+                                  color: ThemeInfo.themeColor.withOpacity(0.5),
                                   blurRadius: 6,
                                   offset: const Offset(0, 6),
                                 ),
@@ -339,8 +341,10 @@ class _PostPageState extends State<PostPage> {
                               child: SizedBox(
                                 height: 30,
                                 width: 30,
-                                child: CircularProgressIndicator(
-                                  color: ThemeColors.gradientColor1,
+                                child: Image.asset(
+                                  ThemeInfo.loadingIcon,
+                                  height: 100,
+                                  color: ThemeInfo.gradientColor1,
                                 ),
                               ),
                             ) :
@@ -370,17 +374,17 @@ class _PostPageState extends State<PostPage> {
             child: Container(
               height: double.infinity,
               width: double.infinity,
-              color: ThemeColors.gradientColor1.withOpacity(0.9),
+              color: ThemeInfo.gradientColor1.withOpacity(0.9),
               child: Center(
                 child: Container(
                   margin: const EdgeInsets.all(40),
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: ThemeColors.gradientColor2,
+                    color: ThemeInfo.gradientColor2,
                     borderRadius: const BorderRadius.all(Radius.circular(12)),
                     boxShadow: [
                       BoxShadow(
-                        color: ThemeColors.themeColor.withOpacity(0.5),
+                        color: ThemeInfo.themeColor.withOpacity(0.5),
                         blurRadius: 7,
                         offset: const Offset(2, 4),
                       ),
@@ -395,7 +399,7 @@ class _PostPageState extends State<PostPage> {
                           child: Text(
                             'Tag someone',
                             style: TextStyle(
-                              color: ThemeColors.themeColor,
+                              color: ThemeInfo.themeColor,
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
@@ -410,7 +414,7 @@ class _PostPageState extends State<PostPage> {
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: [
                               BoxShadow(
-                                color: ThemeColors.themeColor.withOpacity(0.5),
+                                color: ThemeInfo.themeColor.withOpacity(0.5),
                                 blurRadius: 6,
                                 offset: const Offset(0, 4),
                               ),
@@ -448,7 +452,7 @@ class _PostPageState extends State<PostPage> {
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20),
                                   borderSide: BorderSide(
-                                    color: ThemeColors.themeColor,
+                                    color: ThemeInfo.themeColor,
                                     width: 2.0,
                                   ),
                                 ),
@@ -463,7 +467,7 @@ class _PostPageState extends State<PostPage> {
                         SingleChildScrollView(
                           child: Container(
                             decoration: BoxDecoration(
-                              color: ThemeColors.gradientColor2.withOpacity(0.75),
+                              color: ThemeInfo.gradientColor2.withOpacity(0.75),
                               borderRadius: const BorderRadius.all(Radius.circular(15)),
                             ),
                             height: min(searchedUser.length * 80, 200),
@@ -488,7 +492,7 @@ class _PostPageState extends State<PostPage> {
                                     title: Text(
                                       searchedUser[index][2],
                                       style: TextStyle(
-                                        color: ThemeColors.themeColor,
+                                        color: ThemeInfo.themeColor,
                                         fontSize: 24,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -525,7 +529,7 @@ class _PostPageState extends State<PostPage> {
                                   content: const Text(
                                     'User tagged successfully !!!',
                                   ),
-                                  backgroundColor: ThemeColors.gradientColor1.withOpacity(0.9),
+                                  backgroundColor: ThemeInfo.gradientColor1.withOpacity(0.9),
                                   margin: const EdgeInsets.all(10),
                                   behavior: SnackBarBehavior.floating,
                                 ),
@@ -536,7 +540,7 @@ class _PostPageState extends State<PostPage> {
                                   content: const Text(
                                     'Unable to tag !!!',
                                   ),
-                                  backgroundColor: ThemeColors.gradientColor1.withOpacity(0.9),
+                                  backgroundColor: ThemeInfo.gradientColor1.withOpacity(0.9),
                                   margin: const EdgeInsets.all(10),
                                   behavior: SnackBarBehavior.floating,
                                 ),
@@ -550,11 +554,11 @@ class _PostPageState extends State<PostPage> {
                             height: 50,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              color: ThemeColors.themeColor,
+                              color: ThemeInfo.themeColor,
                               borderRadius: BorderRadius.circular(15),
                               boxShadow: [
                                 BoxShadow(
-                                  color: ThemeColors.themeColor.withOpacity(0.5),
+                                  color: ThemeInfo.themeColor.withOpacity(0.5),
                                   blurRadius: 6,
                                   offset: const Offset(0, 6),
                                 ),
@@ -565,8 +569,10 @@ class _PostPageState extends State<PostPage> {
                               child: SizedBox(
                                 height: 30,
                                 width: 30,
-                                child: CircularProgressIndicator(
-                                  color: ThemeColors.gradientColor1,
+                                child: Image.asset(
+                                  ThemeInfo.loadingIcon,
+                                  height: 100,
+                                  color: ThemeInfo.gradientColor1,
                                 ),
                               ),
                             ) :
@@ -598,11 +604,11 @@ class _PostPageState extends State<PostPage> {
         height: 60,
         width: 60,
         decoration: BoxDecoration(
-          color: ThemeColors.themeColor,
+          color: ThemeInfo.themeColor,
           borderRadius: const BorderRadius.all(Radius.circular(18)),
           boxShadow: [
             BoxShadow(
-              color: ThemeColors.themeColor.withOpacity(0.5),
+              color: ThemeInfo.themeColor.withOpacity(0.5),
               blurRadius: 5,
               offset: const Offset(3, 5),
             ),
@@ -617,7 +623,7 @@ class _PostPageState extends State<PostPage> {
             },
             icon: Icon(
               isAddPost ? Icons.arrow_back : Icons.add,
-              color: ThemeColors.gradientColor1,
+              color: ThemeInfo.gradientColor1,
               size: 32,
             ),
           ),

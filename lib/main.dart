@@ -1,13 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import "package:flutter/material.dart";
 import 'package:postgres/postgres.dart';
-import 'package:true_link/UI/ThemeColors.dart';
+import 'package:true_link/LoginPage.dart';
+import 'package:true_link/UI/ThemeInfo.dart';
 
 import 'Activities/HomePage/HomePage.dart';
 import 'Data&Methods/Users.dart';
 import 'Hidden Files/PrivateData.dart';
 import 'UI/Background.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const TrueLink());
 }
 
@@ -20,9 +25,10 @@ class TrueLink extends StatefulWidget {
 
 class _TrueLinkState extends State<TrueLink> {
   bool isLoading = true;
+  bool isHome = false;
 
   @override
-  initState() {
+  void initState() {
     super.initState();
     fetchData();
   }
@@ -36,32 +42,33 @@ class _TrueLinkState extends State<TrueLink> {
         username: uri.userInfo.split(':').first,
         password: uri.userInfo.split(':').last,
       ));
-      if(await Users.getUserData(14)) {
+
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        if (await Users.getUserData()) {
+          setState(() {
+            isLoading = false;
+            isHome = true;
+          });
+        } else {}
+      } else {
         setState(() {
           isLoading = false;
+          isHome = false;
         });
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text(
-              'Unable to block user!!!',
-            ),
-            backgroundColor: ThemeColors.gradientColor1.withOpacity(0.9),
-            margin: const EdgeInsets.all(10),
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
       }
-    } catch (e) {
-      setState(() {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Failed to load data!'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      });
-    }
+    } catch (e) {}
+  }
+
+  void showSnackBar(BuildContext context, String message, Color backgroundColor) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: backgroundColor,
+        margin: const EdgeInsets.all(10),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
   }
 
   @override
@@ -70,27 +77,33 @@ class _TrueLinkState extends State<TrueLink> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         appBarTheme: AppBarTheme(
-          backgroundColor: ThemeColors.gradientColor1,
-          foregroundColor: ThemeColors.themeColor,
+          backgroundColor: ThemeInfo.gradientColor1,
+          foregroundColor: ThemeInfo.themeColor,
           centerTitle: true,
         ),
       ),
-      home: isLoading ?
-      SizedBox(
-        height: double.infinity,
-        width: double.infinity,
-        child: Stack(
-          children: [
-            const Background(),
-            Center(
-              child: CircularProgressIndicator(
-                color: ThemeColors.themeColor,
+      home: Scaffold(
+        body: isLoading ?
+        SizedBox(
+          height: double.infinity,
+          width: double.infinity,
+          child: Stack(
+            children: [
+              const Background(),
+              Center(
+                child: Image.asset(
+                  ThemeInfo.loadingIcon,
+                  height: 100,
+                  color: ThemeInfo.themeColor,
+                ),
               ),
-            ),
-          ],
-        ),
-      ) :
-      const HomePage(),
+            ],
+          ),
+        ) :
+        (isHome ?
+        const HomePage() :
+        const LoginPage()),
+      )
     );
   }
 }

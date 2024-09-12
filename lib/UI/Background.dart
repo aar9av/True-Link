@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'ThemeColors.dart';
+import 'ThemeInfo.dart';
 
 class Background extends StatelessWidget {
   const Background({super.key});
@@ -12,16 +12,42 @@ class Background extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             width: double.infinity,
-            color: ThemeColors.bgColor,
+            color: ThemeInfo.bgColor,
           ),
           Positioned(
-            right: 0,
-            top: 20,
+            top: 100,
+            right: -50,
             child: Image.asset(
-              'assets/EthLogo.png',
-              height: MediaQuery.of(context).size.height * 0.6,
-              color: const Color.fromRGBO(120, 120, 120, 180),
-              colorBlendMode: BlendMode.modulate,
+              ThemeInfo.appIcon,
+              height: MediaQuery.of(context).size.height * 0.2,
+              color: ThemeInfo.themeColor.withOpacity(0.15),
+            ),
+          ),
+          Positioned(
+            top: 220,
+            right: 180,
+            child: Image.asset(
+              ThemeInfo.appIcon,
+              height: MediaQuery.of(context).size.height * 0.05,
+              color: ThemeInfo.themeColor.withOpacity(0.35),
+            ),
+          ),
+          Positioned(
+            top: 350,
+            right: 200,
+            child: Image.asset(
+              ThemeInfo.appIcon,
+              height: MediaQuery.of(context).size.height * 0.25,
+              color: ThemeInfo.themeColor.withOpacity(0.20),
+            ),
+          ),
+          Positioned(
+            top: 580,
+            right: 50,
+            child: Image.asset(
+              ThemeInfo.appIcon,
+              height: MediaQuery.of(context).size.height * 0.1,
+              color: ThemeInfo.themeColor.withOpacity(0.25),
             ),
           ),
         ],

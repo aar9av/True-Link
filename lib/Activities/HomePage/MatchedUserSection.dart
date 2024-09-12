@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../UI/ThemeColors.dart';
+import '../../UI/ThemeInfo.dart';
 import '../../Data&Methods/Users.dart';
 import '../Profile/ChatPage.dart';
 
@@ -23,7 +23,7 @@ class MatchedUserSection extends StatelessWidget {
               width: 150,
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: ThemeColors.themeColor,
+                  color: ThemeInfo.themeColor,
                   width: 3,
                 ),
                 borderRadius: BorderRadius.circular(20),
@@ -83,7 +83,7 @@ class MatchedUserSection extends StatelessWidget {
                     'BIO',
                     style: TextStyle(
                       fontSize: 24,
-                      color: ThemeColors.themeColor,
+                      color: ThemeInfo.themeColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:true_link/Data&Methods/Requests.dart';
 
-import '../../UI/ThemeColors.dart';
+import '../../UI/ThemeInfo.dart';
 import '../Profile/AllProfilePage.dart';
 
 class OtherProfilesSection extends StatefulWidget {
@@ -28,7 +28,7 @@ class _OtherProfilesSectionState extends State<OtherProfilesSection> {
               margin: const EdgeInsets.only(left: 30, top: 10),
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: ThemeColors.themeColor,
+                  color: ThemeInfo.themeColor,
                   width: 3,
                 ),
                 borderRadius: BorderRadius.circular(20),

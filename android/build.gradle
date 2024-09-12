@@ -1,3 +1,14 @@
+buildscript {
+    repositories {       google()
+        mavenCentral()
+    }
+    dependencies {
+        // Define the classpath for Google services plugin here with the version
+        classpath 'com.google.gms:google-services:4.3.15'
+        // Add other dependencies for Kotlin, Android Gradle Plugin, etc.
+    }
+}
+
 allprojects {
     repositories {
         google()
