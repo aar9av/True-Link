@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:true_link/Activities/Profile/EditProfile.dart';
-import '../../UI/ThemeColors.dart';
+import '../../UI/ThemeInfo.dart';
 import '../../Data&Methods/Users.dart';
 import '../Confession/PostPage.dart';
 import '../Profile/AllProfilePage.dart';
@@ -19,10 +19,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
       height: 60,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: ThemeColors.gradientColor1,
+        color: ThemeInfo.gradientColor1,
         boxShadow: [
           BoxShadow(
-            color: ThemeColors.themeColor.withOpacity(0.5),
+            color: ThemeInfo.themeColor.withOpacity(0.5),
             blurRadius: 20,
           ),
         ],
@@ -36,7 +36,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             children: [
               IconButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => PostPage(isAll: true),));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const PostPage(isAll: true),));
                   setState(() {});
                 },
                 icon: const Icon(
@@ -67,13 +67,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: ThemeColors.gradientColor2,
+                    color: ThemeInfo.gradientColor2,
                     width: 3,
                   ),
                   borderRadius: BorderRadius.circular(36),
                   boxShadow: [
                     BoxShadow(
-                      color: ThemeColors.themeColor.withOpacity(0.5),
+                      color: ThemeInfo.themeColor.withOpacity(0.5),
                       blurRadius: 10,
                       offset: const Offset(0, -4),
                     ),

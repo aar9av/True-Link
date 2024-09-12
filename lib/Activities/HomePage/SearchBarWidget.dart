@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:true_link/Activities/Profile/AllProfilePage.dart';
 
-import '../../UI/ThemeColors.dart';
+import '../../UI/ThemeInfo.dart';
 import '../../Data&Methods/Users.dart';
 
 class SearchBarWidget extends StatefulWidget {
@@ -32,7 +32,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: ThemeColors.themeColor.withOpacity(0.5),
+                  color: ThemeInfo.themeColor.withOpacity(0.5),
                   blurRadius: 6,
                   offset: const Offset(0, 4),
                 ),
@@ -68,7 +68,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                   borderSide: BorderSide(
-                    color: ThemeColors.themeColor,
+                    color: ThemeInfo.themeColor,
                     width: 2.0,
                   ),
                 ),
@@ -83,7 +83,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         SingleChildScrollView(
           child: Container(
             decoration: BoxDecoration(
-              color: ThemeColors.gradientColor2.withOpacity(0.75),
+              color: ThemeInfo.gradientColor2.withOpacity(0.75),
               borderRadius: const BorderRadius.all(Radius.circular(15)),
             ),
             height: min(searchedUser.length * 80, 200),
@@ -109,7 +109,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                     title: Text(
                       searchedUser[index][2],
                       style: TextStyle(
-                        color: ThemeColors.themeColor,
+                        color: ThemeInfo.themeColor,
                         fontSize: 24,
                         fontWeight: FontWeight.w600,
                       ),

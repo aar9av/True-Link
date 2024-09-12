@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../UI/ThemeColors.dart';
+import '../../UI/ThemeInfo.dart';
 import '../../Data&Methods/Users.dart';
 
 class Header extends StatelessWidget {
@@ -62,7 +62,7 @@ class Header extends StatelessWidget {
                 Users.currentUserData[0][1],
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  color: ThemeColors.themeColor,
+                  color: ThemeInfo.themeColor,
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),

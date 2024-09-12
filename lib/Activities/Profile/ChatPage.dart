@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:true_link/Activities/HomePage/HomePage.dart';
 import 'package:true_link/Data&Methods/Chats.dart';
-import 'package:true_link/UI/ThemeColors.dart';
+import 'package:true_link/UI/ThemeInfo.dart';
 
 import '../../Data&Methods/Users.dart';
 
@@ -32,7 +32,7 @@ class _ChatPageState extends State<ChatPage> {
           content: const Text(
             'Unable to load messages !!!',
           ),
-          backgroundColor: ThemeColors.gradientColor1.withOpacity(0.9),
+          backgroundColor: ThemeInfo.gradientColor1.withOpacity(0.9),
           margin: const EdgeInsets.all(10),
           behavior: SnackBarBehavior.floating,
         ),
@@ -58,8 +58,8 @@ class _ChatPageState extends State<ChatPage> {
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
               colors: [
-                ThemeColors.gradientColor1,
-                ThemeColors.themeColor.withOpacity(0.01),
+                ThemeInfo.gradientColor1,
+                ThemeInfo.themeColor.withOpacity(0.01),
               ],
             ),
           ),
@@ -84,8 +84,10 @@ class _ChatPageState extends State<ChatPage> {
                   isLoading ?
                   Expanded(
                     child: Center(
-                      child: CircularProgressIndicator(
-                        color: ThemeColors.themeColor,
+                      child: Image.asset(
+                        ThemeInfo.loadingIcon,
+                        height: 100,
+                        color: ThemeInfo.themeColor,
                       ),
                     ),
                   ):
@@ -109,15 +111,15 @@ class _ChatPageState extends State<ChatPage> {
                                   margin: const EdgeInsets.all(4),
                                   padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: ThemeColors.gradientColor2,
+                                    color: ThemeInfo.gradientColor2,
                                     borderRadius: const BorderRadius.all(Radius.circular(12)),
                                     border: Border.all(
-                                      color: ThemeColors.gradientColor2,
+                                      color: ThemeInfo.gradientColor2,
                                       width: 3,
                                     ),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: ThemeColors.themeColor.withOpacity(0.5),
+                                        color: ThemeInfo.themeColor.withOpacity(0.5),
                                         blurRadius: 5,
                                         offset: const Offset(1, 2),
                                       ),
@@ -165,7 +167,7 @@ class _ChatPageState extends State<ChatPage> {
                                       color: Colors.white,
                                     ),
                                   ),
-                                  backgroundColor: ThemeColors.gradientColor1,
+                                  backgroundColor: ThemeInfo.gradientColor1,
                                   actions: <Widget>[
                                     TextButton(
                                       onPressed: () {
@@ -174,7 +176,7 @@ class _ChatPageState extends State<ChatPage> {
                                       child: Text(
                                         'Cancel',
                                         style: TextStyle(
-                                          color: ThemeColors.themeColor,
+                                          color: ThemeInfo.themeColor,
                                         ),
                                       ),
                                     ),
@@ -195,7 +197,7 @@ class _ChatPageState extends State<ChatPage> {
                                                 content: const Text(
                                                   'Unable to block user!!!',
                                                 ),
-                                                backgroundColor: ThemeColors.gradientColor1.withOpacity(0.9),
+                                                backgroundColor: ThemeInfo.gradientColor1.withOpacity(0.9),
                                                 margin: const EdgeInsets.all(10),
                                                 behavior: SnackBarBehavior.floating,
                                               ),
@@ -230,13 +232,15 @@ class _ChatPageState extends State<ChatPage> {
                               child: isBreakupLoading ?
                               Padding(
                                 padding: const EdgeInsets.all(5.0),
-                                child: CircularProgressIndicator(
-                                  color: ThemeColors.gradientColor1,
+                                child: Image.asset(
+                                  ThemeInfo.loadingIcon,
+                                  height: 100,
+                                  color: ThemeInfo.gradientColor1,
                                 ),
                               ) :
                               Icon(
                                 Icons.block,
-                                color: ThemeColors.gradientColor1,
+                                color: ThemeInfo.gradientColor1,
                                 size: 25,
                               ),
                             ),
@@ -250,7 +254,7 @@ class _ChatPageState extends State<ChatPage> {
                               margin: const EdgeInsets.all(5),
                               padding: const EdgeInsets.only(left: 5),
                               decoration: BoxDecoration(
-                                color: ThemeColors.gradientColor1,
+                                color: ThemeInfo.gradientColor1,
                                 borderRadius: BorderRadius.circular(25),
                                 border: Border.all(
                                   color: Colors.grey,
@@ -296,7 +300,7 @@ class _ChatPageState extends State<ChatPage> {
                                     content: const Text(
                                       'Unable to send message !!!',
                                     ),
-                                    backgroundColor: ThemeColors.gradientColor1.withOpacity(0.9),
+                                    backgroundColor: ThemeInfo.gradientColor1.withOpacity(0.9),
                                     margin: const EdgeInsets.all(10),
                                     behavior: SnackBarBehavior.floating,
                                   ),
@@ -312,17 +316,19 @@ class _ChatPageState extends State<ChatPage> {
                             width: 50,
                             margin: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
-                              color: ThemeColors.themeColor,
+                              color: ThemeInfo.themeColor,
                               borderRadius: BorderRadius.circular(25),
                             ),
                             child: Center(
                               child: isMsgLoading ?
-                              CircularProgressIndicator(
-                                color: ThemeColors.gradientColor1,
+                              Image.asset(
+                                ThemeInfo.loadingIcon,
+                                height: 100,
+                                color: ThemeInfo.gradientColor1,
                               ) :
                               Icon(
                                 Icons.send,
-                                color: ThemeColors.gradientColor1,
+                                color: ThemeInfo.gradientColor1,
                                 size: 25,
                               ),
                             ),
