@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:true_link/Activities/Profile/AllProfilePage.dart';
+import 'package:true_link/Activities/AllProfilePage.dart';
 
 import '../../Initial Files/ThemeInfo.dart';
 import '../../Data&Methods/Users.dart';
@@ -115,7 +115,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                       ),
                     ),
                     subtitle: Text(
-                      searchedUser[index][1],
+                      searchedUser[index][4],
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: const TextStyle(

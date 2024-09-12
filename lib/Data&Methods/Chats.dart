@@ -1,4 +1,3 @@
-import 'package:true_link/Data&Methods/Requests.dart';
 import 'package:true_link/Hidden%20Files/PrivateData.dart';
 
 import 'Users.dart';
@@ -6,6 +5,7 @@ import 'Users.dart';
 class Chats {
 
   static dynamic chats = [];
+  static bool isBlock = false;
 
   static Future<bool> getChats () async {
     try {
@@ -27,14 +27,13 @@ class Chats {
 
   static Future<bool> breakUp(int userID, int matchedID) async {
     try {
+      await PrivateData.conn.execute("BEGIN");
       await PrivateData.conn.execute("UPDATE Users SET matchedID = null WHERE userID = $matchedID OR userID = $userID");
-      if(matchedID != 0) {
-        await PrivateData.conn.execute("INSERT INTO History (userID, matchedID) VALUES ($matchedID, $userID)");
-      }
-      await Users.getCurrentUserData(Users.currentUserData[0][0]);
-      await Requests.getUserHistory();
+      await PrivateData.conn.execute("INSERT INTO History (userID, matchedID) VALUES ($matchedID, $userID)");
+      await PrivateData.conn.execute("COMMIT");
       return true;
     } catch (e) {
+      await PrivateData.conn.execute("ROLLBACK");
       return false;
     }
   }

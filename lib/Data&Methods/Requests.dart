@@ -1,5 +1,4 @@
 import '../Hidden Files/PrivateData.dart';
-import 'Chats.dart';
 import 'Users.dart';
 
 class Requests {
@@ -47,13 +46,17 @@ class Requests {
 
   static Future<bool> addRequest(int receiverID) async {
     try {
+      await PrivateData.conn.execute("BEGIN");
       await PrivateData.conn.execute("INSERT INTO Requests (senderID, receiverID) VALUES (${Users.currentUserData[0][0]}, $receiverID)");
       await PrivateData.conn.execute("DELETE FROM History WHERE (userID = ${Users.currentUserData[0][0]} AND matchedID = $receiverID) OR (userID = $receiverID AND matchedID = ${Users.currentUserData[0][0]})");
+      await PrivateData.conn.execute("COMMIT");
+
       await Requests.getPendingRequests();
       await Requests.getOtherUserData();
       await Requests.getUserHistory();
       return true;
     } catch (e) {
+      await PrivateData.conn.execute("ROLLBACK");
       return false;
     }
   }
@@ -71,18 +74,27 @@ class Requests {
 
   static Future<bool> acceptRequest(dynamic sender) async {
     try {
-      await Chats.breakUp(sender[0], sender[6]);
-      await Chats.breakUp(Users.currentUserData[0][0], Users.currentUserData[0][6]);
+      await PrivateData.conn.execute("BEGIN");
+      await PrivateData.conn.execute("UPDATE Users SET matchedID = null WHERE userID = ${sender[0]} OR userID = ${sender[6]}");
+      if(sender[6] != 0) {
+        await PrivateData.conn.execute("INSERT INTO History (userID, matchedID) VALUES (${sender[0]}, ${sender[6]})");
+      }
+      await PrivateData.conn.execute("UPDATE Users SET matchedID = null WHERE userID = ${Users.currentUserData[0][0]} OR userID = ${Users.currentUserData[0][6]}");
+      if(Users.currentUserData[0][6] != 0) {
+        await PrivateData.conn.execute("INSERT INTO History (userID, matchedID) VALUES (${Users.currentUserData[0][0]}, ${Users.currentUserData[0][6]})");
+      }
       await PrivateData.conn.execute("UPDATE Users SET matchedID = ${sender[0]} WHERE userID = ${Users.currentUserData[0][0]}");
       await PrivateData.conn.execute("UPDATE Users SET matchedID = ${Users.currentUserData[0][0]} WHERE userID = ${sender[0]}");
       await PrivateData.conn.execute("DELETE FROM History WHERE (userID = ${Users.currentUserData[0][0]} AND matchedID = ${sender[0]}) OR (userID = ${sender[0]} AND matchedID = ${Users.currentUserData[0][0]})");
       await PrivateData.conn.execute("DELETE FROM Requests WHERE senderID = ${sender[0]} AND receiverID = ${Users.currentUserData[0][0]}");
+      await PrivateData.conn.execute("COMMIT");
+
       await Users.getMatchedUserData();
       await Requests.getOtherUserData();
       await Requests.getMatchRequests();
       return true;
     } catch (e) {
-      print(e);
+      await PrivateData.conn.execute("ROLLBACK");
       return false;
     }
   }
