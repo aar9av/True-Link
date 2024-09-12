@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import "package:flutter/material.dart";
 import 'package:postgres/postgres.dart';
 import 'package:true_link/Initial%20Files/LoginPage.dart';
-import '../Activities/HomePage/HomePage.dart';
+import '../Activities/HomePage.dart';
 import '../Data&Methods/Users.dart';
 import '../Hidden Files/PrivateData.dart';
 import 'Background.dart';

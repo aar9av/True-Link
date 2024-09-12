@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:true_link/Activities/HomePage/HomePage.dart';
 import 'package:true_link/Data&Methods/Chats.dart';
 
 import '../../Data&Methods/Users.dart';
@@ -186,12 +185,12 @@ class _ChatPageState extends State<ChatPage> {
                                           setState(() {
                                             isBreakupLoading = true;
                                           });
+                                          Navigator.of(context).pop();
+                                          Chats.isBlock = true;
+                                          Navigator.of(context).pop();
                                           if(await Chats.breakUp(Users.currentUserData[0][0], Users.currentUserData[0][6])) {
-                                            Navigator.pop(context);
-                                            Navigator.pop(context);
-                                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage(),));
+
                                           } else {
-                                            Navigator.pop(context);
                                             ScaffoldMessenger.of(context).showSnackBar(
                                               SnackBar(
                                                 content: const Text(

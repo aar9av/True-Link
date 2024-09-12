@@ -2,11 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../../Data&Methods/Posts.dart';
-import '../../Data&Methods/Users.dart';
-import '../../Initial Files/Background.dart';
-import '../../Initial Files/ThemeInfo.dart';
-import '../Profile/AllProfilePage.dart';
+import '../Data&Methods/Posts.dart';
+import '../Data&Methods/Users.dart';
+import '../Initial Files/Background.dart';
+import '../Initial Files/ThemeInfo.dart';
+import 'AllProfilePage.dart';
 
 class PostPage extends StatefulWidget {
   final isAll;

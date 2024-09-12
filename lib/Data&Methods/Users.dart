@@ -33,9 +33,9 @@ class Users {
     }
   }
 
-  static Future<bool> getCurrentUserData(int randomUser) async {
+  static Future<bool> getCurrentUserData(int userID) async {
     try {
-      Users.currentUserData = await PrivateData.conn.execute("SELECT userID, email, username, gender, bio, profilepicture, COALESCE(matchedID, '0') AS matchedID FROM Users WHERE userID = $randomUser");
+      Users.currentUserData = await PrivateData.conn.execute("SELECT userID, email, username, gender, bio, profilepicture, COALESCE(matchedID, '0') AS matchedID, userrefid FROM Users WHERE userID = $userID");
       return true;
     } catch(e) {
       return false;
@@ -107,7 +107,7 @@ class Users {
       String profilePicture = Users.currentUserData[0][5];
       if (avatar != null) {
         final file = File(avatar.path);
-        final storageRef = FirebaseStorage.instance.ref().child('user_avatars/${Users.currentUserData[0][6]}');
+        final storageRef = FirebaseStorage.instance.ref().child('user_avatars/${Users.currentUserData[0][7]}');
         final uploadTask = storageRef.putFile(file);
         final snapshot = await uploadTask.whenComplete(() => null);
         final downloadURL = await snapshot.ref.getDownloadURL();

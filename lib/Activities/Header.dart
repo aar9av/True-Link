@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../Initial Files/ThemeInfo.dart';
-import '../../Data&Methods/Users.dart';
+import '../Initial Files/ThemeInfo.dart';
+import '../Data&Methods/Users.dart';
 
 class Header extends StatelessWidget {
   const Header({super.key});
@@ -45,29 +45,31 @@ class Header extends StatelessWidget {
               ),
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Hi! ${Users.currentUserData[0][2]}',
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 26,
-                  fontWeight: FontWeight.w600,
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Hi! ${Users.currentUserData[0][2]}',
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 26,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              Text(
-                Users.currentUserData[0][1],
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: ThemeInfo.themeColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
+                Text(
+                  Users.currentUserData[0][1],
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: ThemeInfo.themeColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

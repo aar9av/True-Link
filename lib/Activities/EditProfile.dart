@@ -2,13 +2,14 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:true_link/Activities/HomePage/HomePage.dart';
 
-import '../../Data&Methods/Users.dart';
-import '../../Initial Files/Background.dart';
-import '../../Initial Files/LoginPage.dart';
-import '../../Initial Files/ThemeInfo.dart';
+import '../Data&Methods/Users.dart';
+import '../Initial Files/Background.dart';
+import '../Initial Files/LoginPage.dart';
+import '../Initial Files/ThemeInfo.dart';
+import 'HomePage.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -361,6 +362,7 @@ class _EditProfileState extends State<EditProfile> {
                 GestureDetector(
                   onTap: () async {
                     await FirebaseAuth.instance.signOut();
+                    await GoogleSignIn().disconnect();
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => const LoginPage()),
