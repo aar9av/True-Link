@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:true_link/UI/Background.dart';
-import 'package:true_link/UI/ThemeInfo.dart';
 
 import '../../Data&Methods/Posts.dart';
 import '../../Data&Methods/Users.dart';
+import '../../Initial Files/Background.dart';
+import '../../Initial Files/ThemeInfo.dart';
 import '../Profile/AllProfilePage.dart';
 
 class PostPage extends StatefulWidget {

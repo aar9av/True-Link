@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'Activities/HomePage/HomePage.dart';
-import 'Data&Methods/Users.dart';
-import 'UI/Background.dart';
-import 'UI/ThemeInfo.dart';
+import '../Activities/HomePage/HomePage.dart';
+import '../Data&Methods/Users.dart';
+import 'Background.dart';
+import 'ThemeInfo.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

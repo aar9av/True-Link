@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:true_link/Data&Methods/Requests.dart';
 
-import '../../UI/ThemeInfo.dart';
+import '../../Initial Files/ThemeInfo.dart';
 import '../Profile/AllProfilePage.dart';
 
 class OtherProfilesSection extends StatefulWidget {

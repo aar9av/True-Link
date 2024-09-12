@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:true_link/Activities/Profile/EditProfile.dart';
-import '../../UI/ThemeInfo.dart';
+import '../../Initial Files/ThemeInfo.dart';
 import '../../Data&Methods/Users.dart';
 import '../Confession/PostPage.dart';
 import '../Profile/AllProfilePage.dart';

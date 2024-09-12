@@ -4,11 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:true_link/Activities/HomePage/HomePage.dart';
-import 'package:true_link/UI/Background.dart';
-import 'package:true_link/UI/ThemeInfo.dart';
 
 import '../../Data&Methods/Users.dart';
-import '../../LoginPage.dart';
+import '../../Initial Files/Background.dart';
+import '../../Initial Files/LoginPage.dart';
+import '../../Initial Files/ThemeInfo.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../UI/ThemeInfo.dart';
+import '../../Initial Files/ThemeInfo.dart';
 import '../../Data&Methods/Users.dart';
 import '../Profile/ChatPage.dart';
 
