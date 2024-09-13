@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:true_link/Data&Methods/Requests.dart';
+import '../Data&Methods/Chats.dart';
 import '../Data&Methods/Users.dart';
 import '../Initial Files/Background.dart';
 import '../Initial Files/ThemeInfo.dart';
@@ -389,6 +390,8 @@ class _AllProfilePageState extends State<AllProfilePage> {
                                             setState(() {
                                               isMatchLoading = false;
                                             });
+                                            Chats.isBlock = true;
+                                            Navigator.pop(context);
                                           }
                                         },
                                         child: Text(

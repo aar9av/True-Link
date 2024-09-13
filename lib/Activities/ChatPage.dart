@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:true_link/Data&Methods/Chats.dart';
 
@@ -17,15 +20,15 @@ class _ChatPageState extends State<ChatPage> {
   bool isLoading = true;
   bool isMsgLoading = false;
   bool isBreakupLoading = false;
-
-  @override
-  initState() {
-    super.initState();
-    fetchChats();
-  }
+  List<dynamic> chats = [];
+  late final StreamSubscription _chatSubscription;
 
   Future<void> fetchChats() async {
-    if(!await Chats.getChats()) {
+    if(await Chats.getMessages()) {
+      setState(() {
+        chats = Chats.chats;
+      });
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text(
@@ -42,8 +45,29 @@ class _ChatPageState extends State<ChatPage> {
     });
   }
 
+  Future<void> startListening() async {
+    DatabaseReference chatRef = FirebaseDatabase.instance.ref('messages/${Users.matchedUserData[0][7]}/${Users.currentUserData[0][7]}');
+    _chatSubscription = chatRef.onValue.listen((event) {
+      fetchChats();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchChats();
+    startListening();
+  }
+
+  @override
+  void dispose() {
+    _chatSubscription.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 50,
@@ -95,14 +119,14 @@ class _ChatPageState extends State<ChatPage> {
                       padding: const EdgeInsets.all(6),
                       child: ListView.builder(
                         reverse: true,
-                        itemCount: Chats.chats.length,
+                        itemCount: chats.length,
                         itemBuilder: (context, index) {
-                          final message = Chats.chats[index];
+                          final message = chats[index];
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Align(
-                                alignment: message[0] == Users.currentUserData[0][0] ? Alignment.centerRight : Alignment.centerLeft,
+                                alignment: message['senderId'] == Users.currentUserData[0][0] ? Alignment.centerRight : Alignment.centerLeft,
                                 child: Container(
                                   constraints: const BoxConstraints(
                                     maxWidth: 200,
@@ -125,7 +149,7 @@ class _ChatPageState extends State<ChatPage> {
                                     ],
                                   ),
                                   child: Text(
-                                    message[2],
+                                    message['message'],
                                     style: const TextStyle(
                                       color: Colors.grey,
                                       fontSize: 16,
@@ -289,9 +313,10 @@ class _ChatPageState extends State<ChatPage> {
                               setState(() {
                                 isMsgLoading = true;
                               });
-                              if(await Chats.addChats(Users.currentUserData[0][0], Users.currentUserData[0][6], message.text)) {
+                              if(await Chats.sendMessage(message.text)) {
                                 setState(() {
                                   message.clear();
+                                  chats = Chats.chats;
                                 });
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
