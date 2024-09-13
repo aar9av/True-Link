@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:true_link/Hidden%20Files/PrivateData.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 import 'Users.dart';
 
@@ -7,19 +10,50 @@ class Chats {
   static dynamic chats = [];
   static bool isBlock = false;
 
-  static Future<bool> getChats () async {
+  static Future<bool> getMessages() async {
     try {
-      Chats.chats = await PrivateData.conn.execute("SELECT * FROM Chats WHERE(senderID = ${Users.currentUserData[0][0]} AND receiverID = ${Users.currentUserData[0][6]}) OR (senderID = ${Users.currentUserData[0][6]} AND receiverID = ${Users.currentUserData[0][0]}) ORDER BY timestamp DESC");
+      DatabaseReference chatRef;
+      chatRef = FirebaseDatabase.instance.ref('messages/${Users.currentUserData[0][7]}/${Users.matchedUserData[0][7]}');
+      final snapshot1 = await chatRef.get();
+      chatRef = FirebaseDatabase.instance.ref('messages/${Users.matchedUserData[0][7]}/${Users.currentUserData[0][7]}');
+      final snapshot2 = await chatRef.get();
+      Chats.chats.clear();
+      if (snapshot1.exists) {
+        final data = snapshot1.value as Map<dynamic, dynamic>;
+        data.forEach((key, value) {
+          Chats.chats.add({
+            'senderId': Users.currentUserData[0][0],
+            'message': value['message'],
+            'timestamp': value['timestamp'],
+          });
+        });
+      }
+      if (snapshot2.exists) {
+        final data = snapshot2.value as Map<dynamic, dynamic>;
+        data.forEach((key, value) {
+          Chats.chats.add({
+            'senderId': Users.matchedUserData[0][0],
+            'message': value['message'],
+            'timestamp': value['timestamp'],
+          });
+        });
+      }
+      Chats.chats.sort((a, b) => (b['timestamp'] as int).compareTo(a['timestamp'] as int));
       return true;
     } catch(e) {
       return false;
     }
   }
 
-  static Future<bool> addChats (int senderID, int receiverID, String message) async {
+  static Future<bool> sendMessage(String message) async {
     try {
-      Chats.chats = await PrivateData.conn.execute("INSERT INTO Chats (senderID, receiverID, message) VALUES ($senderID, $receiverID, '$message')");
-      return await Chats.getChats();
+      DatabaseReference chatRef = FirebaseDatabase.instance.ref('messages/${Users.currentUserData[0][7]}/${Users.matchedUserData[0][7]}');
+      await chatRef.push().set({
+        'message': message,
+        'timestamp': DateTime.now().millisecondsSinceEpoch,
+      });
+      await getMessages();
+      return true;
     } catch(e) {
       return false;
     }

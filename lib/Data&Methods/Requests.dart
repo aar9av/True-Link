@@ -88,10 +88,6 @@ class Requests {
       await PrivateData.conn.execute("DELETE FROM History WHERE (userID = ${Users.currentUserData[0][0]} AND matchedID = ${sender[0]}) OR (userID = ${sender[0]} AND matchedID = ${Users.currentUserData[0][0]})");
       await PrivateData.conn.execute("DELETE FROM Requests WHERE senderID = ${sender[0]} AND receiverID = ${Users.currentUserData[0][0]}");
       await PrivateData.conn.execute("COMMIT");
-
-      await Users.getMatchedUserData();
-      await Requests.getOtherUserData();
-      await Requests.getMatchRequests();
       return true;
     } catch (e) {
       await PrivateData.conn.execute("ROLLBACK");

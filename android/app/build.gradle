@@ -1,9 +1,7 @@
 plugins {
     id "com.android.application"
     id "kotlin-android"
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
-    // Apply Google services plugin without specifying version
     id 'com.google.gms.google-services'
 }
 
@@ -62,6 +60,8 @@ dependencies {
     // Add Firebase dependencies without specifying the version when using BoM
     implementation 'com.google.firebase:firebase-analytics'
     // Add other Firebase dependencies as needed
+
+    implementation 'com.google.firebase:firebase-database'
 }
 
 apply plugin: 'com.google.gms.google-services'

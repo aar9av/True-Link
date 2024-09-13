@@ -363,6 +363,7 @@ class _EditProfileState extends State<EditProfile> {
                   onTap: () async {
                     await FirebaseAuth.instance.signOut();
                     await GoogleSignIn().disconnect();
+                    Navigator.pop(context);
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => const LoginPage()),

@@ -429,7 +429,15 @@ class _HomePageState extends State<HomePage> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const AllProfilePage(userID: -2),)).then((_) {setState(() {});});
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const AllProfilePage(userID: -2),)).then((_) async {
+                              if(Chats.isBlock) {
+                                setState(() {});
+                                await Users.getUserData();
+                                setState(() {
+                                  Chats.isBlock = false;
+                                });
+                              }
+                            });
                           },
                           child: Container(
                             margin: const EdgeInsets.only(
